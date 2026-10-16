@@ -58,9 +58,21 @@
 
 ### 7. 🔒 Express Checkout & Confetti Confirmation
 - Multi-step customer delivery information form with inline validation and real-time field error feedback.
+- Automatic address & contact prefill when signed into a client account.
 - Simulated payment method switcher: Credit Card, Apple Pay / Biometrics, and Direct Wire / COD.
 - Simulated order completion generating unique references (`SPHERE-2026-XXXXX`).
 - Order confirmation view with celebratory confetti, delivery timeline tracking, invoice breakdown, and printable receipt.
+
+### 8. 👤 Client Authentication & Account Portal (Demo Mode)
+- **Dedicated Routes**: `/login` (Sign In), `/register` (Create Account), and `/forgot-password` (Password Recovery).
+- **Interactive UI**: Split-screen cyberpunk showcase with ambient gradients, floating metric pills, and real-time input validation.
+- **Security & UX Controls**: Interactive password visibility toggles (`Eye` / `EyeOff`), remember-me terminal selection, and terms acknowledgment.
+- **One-Click Evaluator Profiles**: Quick-fill demo account shortcuts (`alex.vance@sphere.network` / `elena.rostova@sphere.network`) for instantaneous evaluator testing.
+- **Navbar Account Integration**: Logged-in client avatar/initials badge, membership tier indicator (*"Visionary Member"*), quick links to saved bags/manifests, and working sign-out flow.
+
+> [!NOTE]
+> **Authentication & Security Disclaimer**:
+> ShopSphere is currently a frontend-only portfolio demonstration. Client authentication is implemented via a lightweight, client-side demo state (`AuthContext.jsx`) stored safely in `localStorage`. It does **not** connect to a remote backend database, does **not** store plaintext passwords remotely, and does **not** dispatch live password recovery emails. This design is intentionally client-contained for frictionless portfolio and interview review.
 
 ---
 
@@ -83,7 +95,7 @@ ShopSphere/
 │   ├── assets/                      # Static icons and imagery
 │   ├── components/
 │   │   ├── cart/                    # CartItem, CartSummary
-│   │   ├── checkout/                # CheckoutForm with validation
+│   │   ├── checkout/                # CheckoutForm with validation & user prefill
 │   │   ├── common/                  # Button, Badge, Modal, SearchOverlay,
 │   │   │                            # QuickView, CompareDrawer, Breadcrumbs,
 │   │   │                            # BackToTop, ShoppingAssistant
@@ -91,9 +103,10 @@ ShopSphere/
 │   │   │                            # TrendingProducts, PromoBanner,
 │   │   │                            # CuratedCollection, TrustSection,
 │   │   │                            # NewsletterSection
-│   │   ├── layout/                  # Navbar, Footer, AnnouncementBar
+│   │   ├── layout/                  # Navbar (with user portal), Footer, AnnouncementBar
 │   │   └── products/                # ProductCard, ProductGrid, ProductFilter
 │   ├── context/
+│   │   ├── AuthContext.jsx          # Client demo authentication & user profiles
 │   │   ├── CartContext.jsx          # Shopping bag state & calculations
 │   │   ├── WishlistContext.jsx      # Saved items state
 │   │   ├── ThemeContext.jsx         # Dark / Light theme persistence
@@ -113,6 +126,9 @@ ShopSphere/
 │   │   ├── CartPage.jsx             # Shopping bag (/cart)
 │   │   ├── CheckoutPage.jsx         # Express checkout (/checkout)
 │   │   ├── OrderSuccessPage.jsx     # Order confirmation (/order-success)
+│   │   ├── LoginPage.jsx            # Sign In experience (/login)
+│   │   ├── RegisterPage.jsx         # Create Account experience (/register)
+│   │   ├── ForgotPasswordPage.jsx   # Password Recovery UI (/forgot-password)
 │   │   └── NotFoundPage.jsx         # Custom 404 handler
 │   ├── utils/
 │   │   └── formatters.js            # Currency, IDs, discounts, dates

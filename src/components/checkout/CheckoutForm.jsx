@@ -2,31 +2,38 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CreditCard, Smartphone, ShieldCheck, Lock, CheckCircle2, AlertCircle, Truck, DollarSign } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
+import { useAuth } from '../../context/AuthContext';
 import { formatPrice, generateOrderId } from '../../utils/formatters';
 import { Button } from '../common/Button';
 
 export function CheckoutForm() {
   const { cart, subtotal, discountAmount, shippingCharge, taxAmount, total, clearCart } = useCart();
+  const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    address: '',
-    apartment: '',
-    city: '',
-    state: '',
-    postalCode: '',
-    country: 'United States',
-    paymentMethod: 'card',
-    shippingMethod: 'standard',
-    // Card simulation fields
-    cardName: '',
-    cardNumber: '',
-    cardExpiry: '',
-    cardCvc: ''
+  const [formData, setFormData] = useState(() => {
+    const names = user?.name ? user.name.split(' ') : ['', ''];
+    const savedAddr = user?.savedAddresses?.[0];
+
+    return {
+      firstName: names[0] || '',
+      lastName: names.slice(1).join(' ') || '',
+      email: user?.email || '',
+      phone: '',
+      address: savedAddr?.address || '',
+      apartment: '',
+      city: savedAddr?.city || '',
+      state: savedAddr?.state || '',
+      postalCode: savedAddr?.postalCode || '',
+      country: 'United States',
+      paymentMethod: 'card',
+      shippingMethod: 'standard',
+      // Card simulation fields
+      cardName: user?.name || '',
+      cardNumber: '',
+      cardExpiry: '',
+      cardCvc: ''
+    };
   });
 
   const [errors, setErrors] = useState({});

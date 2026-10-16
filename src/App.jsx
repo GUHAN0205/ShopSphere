@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 // Context Providers
 import { ThemeProvider } from './context/ThemeContext';
 import { ToastProvider } from './context/ToastContext';
+import { AuthProvider } from './context/AuthContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { CartProvider } from './context/CartContext';
 import { CompareProvider } from './context/CompareContext';
@@ -26,6 +27,9 @@ import { WishlistPage } from './pages/WishlistPage';
 import { CartPage } from './pages/CartPage';
 import { CheckoutPage } from './pages/CheckoutPage';
 import { OrderSuccessPage } from './pages/OrderSuccessPage';
+import { LoginPage } from './pages/LoginPage';
+import { RegisterPage } from './pages/RegisterPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 function ScrollToTop() {
@@ -58,6 +62,9 @@ function AnimatedRoutes() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/order-success" element={<OrderSuccessPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </motion.div>
@@ -69,26 +76,28 @@ export default function App() {
   return (
     <ThemeProvider>
       <ToastProvider>
-        <WishlistProvider>
-          <CartProvider>
-            <CompareProvider>
-              <Router>
-                <ScrollToTop />
-                <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300">
-                  <AnnouncementBar />
-                  <Navbar />
-                  <main className="flex-1">
-                    <AnimatedRoutes />
-                  </main>
-                  <Footer />
-                  <BackToTop />
-                  <CompareDrawer />
-                  <ShoppingAssistant />
-                </div>
-              </Router>
-            </CompareProvider>
-          </CartProvider>
-        </WishlistProvider>
+        <AuthProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <CompareProvider>
+                <Router>
+                  <ScrollToTop />
+                  <div className="min-h-screen flex flex-col bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300">
+                    <AnnouncementBar />
+                    <Navbar />
+                    <main className="flex-1">
+                      <AnimatedRoutes />
+                    </main>
+                    <Footer />
+                    <BackToTop />
+                    <CompareDrawer />
+                    <ShoppingAssistant />
+                  </div>
+                </Router>
+              </CompareProvider>
+            </CartProvider>
+          </WishlistProvider>
+        </AuthProvider>
       </ToastProvider>
     </ThemeProvider>
   );
