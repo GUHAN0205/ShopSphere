@@ -11,19 +11,19 @@ import { Badge } from './Badge';
 
 export function QuickViewModal({ product, isOpen, onClose }) {
   const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedColor, setSelectedColor] = useState('Standard');
+  const [selectedColor, setSelectedColor] = useState(() => (product?.colors ? product.colors[0] : 'Standard'));
   const [quantity, setQuantity] = useState(1);
 
   const { addToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
 
   useEffect(() => {
-    if (product) {
+    if (isOpen && product) {
       setSelectedImage(0);
       setSelectedColor(product.colors ? product.colors[0] : 'Standard');
       setQuantity(1);
     }
-  }, [product]);
+  }, [isOpen, product]);
 
   if (!product) return null;
 

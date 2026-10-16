@@ -8,7 +8,9 @@ import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { useCompare } from '../../context/CompareContext';
 import { Badge } from '../common/Badge';
-import { QuickViewModal } from '../common/QuickViewModal';
+import QuickViewModal, { QuickViewModal as QuickViewModalNamed } from '../common/QuickViewModal';
+
+const ActiveQuickViewModal = QuickViewModal || QuickViewModalNamed;
 
 export function ProductCard({ product }) {
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
@@ -174,7 +176,7 @@ export function ProductCard({ product }) {
       </motion.div>
 
       {/* Quick View Modal */}
-      <QuickViewModal
+      <ActiveQuickViewModal
         product={product}
         isOpen={isQuickViewOpen}
         onClose={() => setIsQuickViewOpen(false)}

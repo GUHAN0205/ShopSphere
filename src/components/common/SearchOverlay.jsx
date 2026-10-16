@@ -17,17 +17,21 @@ export function SearchOverlay({ isOpen, onClose }) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
-      setQuery('');
     }
     return () => {
       document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
 
+  const handleClose = () => {
+    setQuery('');
+    onClose();
+  };
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && isOpen) {
-        onClose();
+        handleClose();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -47,12 +51,12 @@ export function SearchOverlay({ isOpen, onClose }) {
       }).slice(0, 6);
 
   const handleSelectProduct = (productId) => {
-    onClose();
+    handleClose();
     navigate(`/products/${productId}`);
   };
 
   const handleCategorySelect = (categorySlug) => {
-    onClose();
+    handleClose();
     navigate(`/categories/${categorySlug}`);
   };
 
@@ -64,7 +68,7 @@ export function SearchOverlay({ isOpen, onClose }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={handleClose}
             className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-sm"
           />
 
@@ -188,7 +192,7 @@ export function SearchOverlay({ isOpen, onClose }) {
               <span>Quick Navigation</span>
               <button
                 onClick={() => {
-                  onClose();
+                  handleClose();
                   navigate('/products');
                 }}
                 className="text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 font-medium"

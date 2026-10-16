@@ -15,7 +15,6 @@ import {
   LogIn,
   LogOut,
   Package,
-  Layers,
   ArrowUpRight
 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
@@ -25,7 +24,9 @@ import { useAuth } from '../../context/AuthContext';
 import { CATEGORIES } from '../../data/categories';
 import { PRODUCTS, getCategoryProductCount } from '../../data/products';
 import { handleImageError } from '../../utils/imageFallback';
-import { SearchOverlay } from '../common/SearchOverlay';
+import SearchOverlay, { SearchOverlay as SearchOverlayNamed } from '../common/SearchOverlay';
+
+const ActiveSearchOverlay = SearchOverlay || SearchOverlayNamed;
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -595,7 +596,7 @@ export function Navbar() {
       </header>
 
       {/* Global Search Overlay */}
-      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <ActiveSearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>
   );
 }
