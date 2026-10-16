@@ -25,6 +25,7 @@ import { useAuth } from '../../context/AuthContext';
 import { CATEGORIES } from '../../data/categories';
 import { PRODUCTS, getCategoryProductCount } from '../../data/products';
 import { handleImageError } from '../../utils/imageFallback';
+import { SearchOverlay } from '../common/SearchOverlay';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);

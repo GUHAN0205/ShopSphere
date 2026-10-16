@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Star, ShoppingBag, Heart, Check, ExternalLink, ShieldCheck } from 'lucide-react';
@@ -10,14 +10,22 @@ import { Button } from './Button';
 import { Badge } from './Badge';
 
 export function QuickViewModal({ product, isOpen, onClose }) {
-  if (!product) return null;
-
   const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedColor, setSelectedColor] = useState(product.colors ? product.colors[0] : 'Standard');
+  const [selectedColor, setSelectedColor] = useState('Standard');
   const [quantity, setQuantity] = useState(1);
 
   const { addToCart } = useCart();
   const { isInWishlist, toggleWishlist } = useWishlist();
+
+  useEffect(() => {
+    if (product) {
+      setSelectedImage(0);
+      setSelectedColor(product.colors ? product.colors[0] : 'Standard');
+      setQuantity(1);
+    }
+  }, [product]);
+
+  if (!product) return null;
 
   const discount = calculateDiscount(product.price, product.originalPrice);
   const isSaved = isInWishlist(product.id);
