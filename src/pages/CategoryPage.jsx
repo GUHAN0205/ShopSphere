@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { CATEGORIES } from '../data/categories';
+import { CATEGORIES, getCategoryBySlug } from '../data/categories';
 import { PRODUCTS } from '../data/products';
 import { ProductGrid } from '../components/products/ProductGrid';
 import { Breadcrumbs } from '../components/common/Breadcrumbs';
@@ -10,9 +10,7 @@ import { Sparkles, ArrowLeft } from 'lucide-react';
 export function CategoryPage() {
   const { category: categorySlug } = useParams();
 
-  const currentCategory = CATEGORIES.find(
-    c => c.slug === categorySlug || c.id === categorySlug
-  );
+  const currentCategory = getCategoryBySlug(categorySlug);
 
   const [sortBy, setSortBy] = useState('featured');
   const [inStockOnly, setInStockOnly] = useState(false);

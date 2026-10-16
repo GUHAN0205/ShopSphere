@@ -61,6 +61,7 @@ export function ShopByLifestyle() {
   // Pick matching products based on lifestyle tags
   const matchingProducts = PRODUCTS.filter(p =>
     p.lifestyle === selectedLifestyle ||
+    p.lifestyleTag === selectedLifestyle ||
     p.tags?.some(tag => currentLifestyle.filterTags.includes(tag.toLowerCase())) ||
     currentLifestyle.filterTags.includes(p.category)
   ).slice(0, 4);
@@ -138,7 +139,7 @@ export function ShopByLifestyle() {
 
             <div className="pt-6 mt-4 border-t border-[#e7e2d9] dark:border-white/10">
               <Link
-                to={`/products?category=${currentLifestyle.filterTags[0]}`}
+                to={`/products?lifestyle=${currentLifestyle.id}`}
                 className="inline-flex items-center gap-2 text-xs font-bold text-stone-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
               >
                 <span>Browse All {currentLifestyle.label} Objects</span>

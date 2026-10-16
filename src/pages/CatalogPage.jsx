@@ -12,6 +12,9 @@ export function CatalogPage() {
   const [selectedCategory, setSelectedCategory] = useState(
     searchParams.get('cat') || searchParams.get('category') || 'all'
   );
+  const [selectedLifestyle, setSelectedLifestyle] = useState(
+    searchParams.get('lifestyle') || 'all'
+  );
   const [priceRange, setPriceRange] = useState(2000);
   const [minRating, setMinRating] = useState(
     searchParams.get('filter') === 'bestsellers' ? 4.7 : 0
@@ -29,6 +32,9 @@ export function CatalogPage() {
     const cat = searchParams.get('cat') || searchParams.get('category');
     if (cat !== null) setSelectedCategory(cat);
 
+    const lf = searchParams.get('lifestyle');
+    if (lf !== null) setSelectedLifestyle(lf);
+
     const filter = searchParams.get('filter');
     if (filter === 'new') {
       setSortBy('newest');
@@ -40,6 +46,7 @@ export function CatalogPage() {
   const handleResetFilters = () => {
     setSearchQuery('');
     setSelectedCategory('all');
+    setSelectedLifestyle('all');
     setPriceRange(2000);
     setMinRating(0);
     setSortBy('featured');
@@ -66,6 +73,14 @@ export function CatalogPage() {
         return false;
       }
 
+      // Lifestyle check
+      if (selectedLifestyle !== 'all') {
+        const prodLifestyle = prod.lifestyle || prod.lifestyleTag;
+        if (prodLifestyle !== selectedLifestyle) {
+          return false;
+        }
+      }
+
       // Price check
       if (prod.price > priceRange) {
         return false;
@@ -89,7 +104,7 @@ export function CatalogPage() {
       if (sortBy === 'newest') return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
       return (b.isFeatured ? 1 : 0) - (a.isFeatured ? 1 : 0);
     });
-  }, [searchQuery, selectedCategory, priceRange, minRating, sortBy, inStockOnly]);
+  }, [searchQuery, selectedCategory, selectedLifestyle, priceRange, minRating, sortBy, inStockOnly]);
 
   return (
     <div className="py-6 sm:py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#faf9f5] dark:bg-[#0c0d11] text-[#121316] dark:text-[#f3efe6]">
@@ -105,6 +120,24 @@ export function CatalogPage() {
         <p className="text-sm sm:text-base text-stone-600 dark:text-stone-400 mt-2 max-w-2xl font-normal">
           Explore all 48 catalog objects organized across audio instruments, precision horology, technical apparel, ceramics, and daily essentials.
         </p>
+
+        {selectedLifestyle !== 'all' && (
+          <div className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700/40 text-blue-700 dark:text-blue-300 text-xs font-semibold">
+            <span>Filtered by Lifestyle: <strong className="capitalize">{selectedLifestyle}</strong></span>
+            <button
+              onClick={() => {
+                setSelectedLifestyle('all');
+                const next = new URLSearchParams(searchParams);
+                next.delete('lifestyle');
+                setSearchParams(next);
+              }}
+              className="hover:text-blue-900 dark:hover:text-white cursor-pointer ml-1 text-sm font-bold leading-none"
+              title="Remove lifestyle filter"
+            >
+              ×
+            </button>
+          </div>
+        )}
       </div>
 
       <ProductFilter

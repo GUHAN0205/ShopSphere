@@ -15,7 +15,7 @@ import {
   ChevronRight,
   Clock
 } from 'lucide-react';
-import { PRODUCTS } from '../data/products';
+import { PRODUCTS, getProductById, getRelatedProducts } from '../data/products';
 import { formatPrice, calculateDiscount } from '../utils/formatters';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
@@ -29,7 +29,7 @@ import { ProductCard } from '../components/products/ProductCard';
 
 export function ProductDetailPage() {
   const { id } = useParams();
-  const product = PRODUCTS.find(p => p.id === id);
+  const product = getProductById(id);
 
   const [activeImage, setActiveImage] = useState(0);
   const [selectedColor, setSelectedColor] = useState('');
@@ -70,9 +70,7 @@ export function ProductDetailPage() {
   const isSaved = isInWishlist(product.id);
   const isCompared = isInCompare ? isInCompare(product.id) : false;
 
-  const relatedProducts = PRODUCTS.filter(
-    p => p.id !== product.id && p.category === product.category
-  ).slice(0, 4);
+  const relatedProducts = getRelatedProducts(product, 4);
 
   const recentOthers = (recentlyViewed || [])
     .filter(p => p.id !== product.id)

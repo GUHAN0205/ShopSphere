@@ -7,8 +7,8 @@ import { formatPrice } from '../../utils/formatters';
 import { Button } from '../common/Button';
 
 export function CuratedCollection() {
-  const watch = PRODUCTS.find(p => p.id === 'prod-02');
-  const camera = PRODUCTS.find(p => p.id === 'prod-16');
+  const watch = PRODUCTS.find(p => p.id === 'prod-25') || PRODUCTS[0];
+  const camera = PRODUCTS.find(p => p.id === 'prod-05') || PRODUCTS[1];
 
   const spotlights = [watch, camera].filter(Boolean);
 

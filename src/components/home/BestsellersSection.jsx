@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, ArrowRight, Flame } from 'lucide-react';
+import { CATEGORIES } from '../../data/categories';
 import { PRODUCTS } from '../../data/products';
 import { ProductCard } from '../products/ProductCard';
 
@@ -10,21 +11,19 @@ export function BestsellersSection() {
 
   const filterTabs = [
     { id: 'all', label: 'All Bestsellers' },
-    { id: 'audio', label: 'Audio & Acoustics' },
-    { id: 'watches', label: 'Horology' },
-    { id: 'footwear', label: 'Footwear' },
-    { id: 'home-living', label: 'Living' },
-    { id: 'electronics', label: 'Electronics' }
+    ...CATEGORIES.map(c => ({ id: c.id, label: c.shortName || c.name }))
   ];
 
   // All products sorted by rating or bestseller badge
-  const allBestsellers = PRODUCTS.filter(p => p.rating >= 4.7 || p.badge === 'Bestseller');
+  const allBestsellers = PRODUCTS.filter(p => p.isBestseller || p.rating >= 4.8);
 
   const filteredItems = activeTab === 'all'
     ? allBestsellers.slice(0, 8)
-    : allBestsellers.filter(p => p.category === activeTab).slice(0, 8);
+    : PRODUCTS.filter(p => p.category === activeTab && (p.isBestseller || p.rating >= 4.7)).slice(0, 8);
 
-  const displayList = filteredItems.length > 0 ? filteredItems : allBestsellers.slice(0, 8);
+  const displayList = filteredItems.length > 0
+    ? filteredItems
+    : PRODUCTS.filter(p => p.category === activeTab).slice(0, 8);
 
   return (
     <section className="py-16 md:py-24 bg-[#faf9f5] dark:bg-[#0c0d11] text-[#121316] dark:text-[#f3efe6]">
