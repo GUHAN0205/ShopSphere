@@ -193,7 +193,7 @@ export function SearchOverlay({ isOpen, onClose }) {
                 }}
                 className="text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 font-medium"
               >
-                <span>Browse All 48 Products</span>
+                <span>Browse All {PRODUCTS.length} Products</span>
                 <ArrowRight className="w-3 h-3" />
               </button>
             </div>
@@ -203,3 +203,5 @@ export function SearchOverlay({ isOpen, onClose }) {
     </AnimatePresence>
   );
 }
+
+export default SearchOverlay;
