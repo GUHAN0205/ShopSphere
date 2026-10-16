@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Star, ShoppingBag, Heart, Check, ExternalLink, ShieldCheck } from 'lucide-react';
 import { formatPrice, calculateDiscount } from '../../utils/formatters';
+import { handleImageError } from '../../utils/imageFallback';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { Button } from './Button';
@@ -60,6 +61,7 @@ export function QuickViewModal({ product, isOpen, onClose }) {
                   <img
                     src={product.images[selectedImage] || product.images[0]}
                     alt={product.name}
+                    onError={handleImageError}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {product.badge && (
@@ -82,7 +84,7 @@ export function QuickViewModal({ product, isOpen, onClose }) {
                             : 'border-[#e7e2d9] dark:border-white/10 opacity-70 hover:opacity-100'
                         }`}
                       >
-                        <img src={img} alt="" className="w-full h-full object-cover" />
+                        <img src={img} alt="" onError={handleImageError} className="w-full h-full object-cover" />
                       </button>
                     ))}
                   </div>

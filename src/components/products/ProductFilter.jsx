@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search, SlidersHorizontal, X, RotateCcw } from 'lucide-react';
 import { CATEGORIES } from '../../data/categories';
+import { PRODUCTS } from '../../data/products';
 import { formatPrice } from '../../utils/formatters';
 
 export function ProductFilter({
@@ -40,7 +41,7 @@ export function ProductFilter({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search across all 48 products, tags, specs..."
+            placeholder={`Search across all ${PRODUCTS.length} products, tags, specs...`}
             className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white dark:bg-[#12141c] border border-[#e7e2d9] dark:border-white/10 text-stone-900 dark:text-white placeholder-stone-400 text-sm focus:outline-none focus:border-stone-500 transition-all shadow-xs"
           />
           {searchQuery && (
@@ -111,21 +112,24 @@ export function ProductFilter({
                     : 'bg-white dark:bg-white/5 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-white/10 border border-[#e7e2d9] dark:border-white/10'
                 }`}
               >
-                All 48 Items
+                All ({PRODUCTS.length})
               </button>
-              {CATEGORIES.map(cat => (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.slug)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                    selectedCategory === cat.slug
-                      ? 'bg-[#121316] text-white dark:bg-white dark:text-[#121316] shadow-xs'
-                      : 'bg-white dark:bg-white/5 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-white/10 border border-[#e7e2d9] dark:border-white/10'
-                  }`}
-                >
-                  {cat.name}
-                </button>
-              ))}
+              {CATEGORIES.map(cat => {
+                const count = PRODUCTS.filter(p => p.category === cat.id).length;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.slug)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                      selectedCategory === cat.slug
+                        ? 'bg-[#121316] text-white dark:bg-white dark:text-[#121316] shadow-xs'
+                        : 'bg-white dark:bg-white/5 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-white/10 border border-[#e7e2d9] dark:border-white/10'
+                    }`}
+                  >
+                    {cat.shortName || cat.name} ({count})
+                  </button>
+                );
+              })}
             </div>
           </div>
 

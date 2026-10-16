@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { PRODUCTS, getProductById, getRelatedProducts } from '../data/products';
 import { formatPrice, calculateDiscount } from '../utils/formatters';
+import { handleImageError } from '../utils/imageFallback';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import { useCompare } from '../context/CompareContext';
@@ -111,6 +112,7 @@ export function ProductDetailPage() {
             <img
               src={product.images[activeImage] || product.images[0]}
               alt={product.name}
+              onError={handleImageError}
               className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-106"
             />
 
@@ -151,7 +153,7 @@ export function ProductDetailPage() {
                       : 'border-[#e7e2d9] dark:border-white/10 opacity-70 hover:opacity-100'
                   }`}
                 >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
+                  <img src={img} alt="" onError={handleImageError} className="w-full h-full object-cover" />
                 </button>
               ))}
             </div>

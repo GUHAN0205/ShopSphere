@@ -118,7 +118,7 @@ export function CatalogPage() {
           Curated Catalog
         </h1>
         <p className="text-sm sm:text-base text-stone-600 dark:text-stone-400 mt-2 max-w-2xl font-normal">
-          Explore all 48 catalog objects organized across audio instruments, precision horology, technical apparel, ceramics, and daily essentials.
+          Explore all {PRODUCTS.length} catalog objects organized across audio instruments, precision horology, technical apparel, ceramics, and daily essentials.
         </p>
 
         {selectedLifestyle !== 'all' && (

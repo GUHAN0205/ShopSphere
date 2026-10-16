@@ -22,8 +22,9 @@ import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
-import { SearchOverlay } from '../common/SearchOverlay';
 import { CATEGORIES } from '../../data/categories';
+import { PRODUCTS, getCategoryProductCount } from '../../data/products';
+import { handleImageError } from '../../utils/imageFallback';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -171,30 +172,58 @@ export function Navbar() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
                       transition={{ duration: 0.16 }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 w-[560px] rounded-2xl bg-[#faf9f5] dark:bg-[#12141c] border border-[#e7e2d9] dark:border-white/10 shadow-2xl p-4 z-50 grid grid-cols-2 gap-2"
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[680px] max-w-[95vw] rounded-2xl bg-[#faf9f5] dark:bg-[#12141c] border border-[#e7e2d9] dark:border-white/10 shadow-2xl p-4 sm:p-5 z-50 overflow-hidden"
                     >
-                      {CATEGORIES.map((cat) => (
+                      <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#e7e2d9] dark:border-white/10">
+                        <div className="flex items-center gap-2">
+                          <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                          <span className="text-xs font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300">
+                            Curated Departments (8)
+                          </span>
+                        </div>
                         <Link
-                          key={cat.id}
-                          to={`/categories/${cat.slug}`}
-                          className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white dark:hover:bg-white/5 border border-transparent hover:border-[#e7e2d9] dark:hover:border-white/10 group transition-all"
+                          to="/products"
+                          onClick={() => setIsCategoriesDropdownOpen(false)}
+                          className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
                         >
-                          <img
-                            src={cat.image}
-                            alt={cat.name}
-                            className="w-11 h-11 rounded-lg object-cover bg-stone-200 dark:bg-stone-800 shrink-0 group-hover:scale-105 transition-transform"
-                          />
-                          <div className="flex-1 min-w-0">
-                            <div className="text-xs font-semibold text-stone-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">
-                              {cat.name}
-                            </div>
-                            <div className="text-[11px] text-stone-500 dark:text-stone-400">
-                              {cat.itemCount} items
-                            </div>
-                          </div>
-                          <ArrowUpRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-blue-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                          <span>Full Catalog ({PRODUCTS.length} Objects)</span>
+                          <ArrowUpRight className="w-3 h-3" />
                         </Link>
-                      ))}
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2.5 max-h-[60vh] overflow-y-auto pr-1">
+                        {CATEGORIES.map((cat) => {
+                          const count = getCategoryProductCount(cat.id);
+                          return (
+                            <Link
+                              key={cat.id}
+                              to={`/categories/${cat.slug}`}
+                              onClick={() => setIsCategoriesDropdownOpen(false)}
+                              className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-white dark:hover:bg-white/5 border border-transparent hover:border-[#e7e2d9] dark:hover:border-white/10 group transition-all"
+                            >
+                              <img
+                                src={cat.image}
+                                alt={cat.name}
+                                onError={handleImageError}
+                                className="w-12 h-12 rounded-lg object-cover bg-stone-200 dark:bg-stone-800 shrink-0 group-hover:scale-105 transition-transform"
+                              />
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center justify-between gap-1">
+                                  <span className="text-xs font-bold text-stone-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">
+                                    {cat.name}
+                                  </span>
+                                  <span className="text-[10px] font-bold text-stone-500 dark:text-stone-400 shrink-0 bg-stone-100 dark:bg-white/5 px-1.5 py-0.5 rounded">
+                                    {count} items
+                                  </span>
+                                </div>
+                                <p className="text-[11px] text-stone-500 dark:text-stone-400 line-clamp-1 mt-0.5">
+                                  {cat.description}
+                                </p>
+                              </div>
+                            </Link>
+                          );
+                        })}
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -501,7 +530,7 @@ export function Navbar() {
                     className="flex items-center justify-between p-3 rounded-xl hover:bg-stone-100 dark:hover:bg-white/5 text-sm font-semibold text-stone-900 dark:text-white"
                   >
                     <span>Shop All Products</span>
-                    <span className="text-xs text-stone-400">48 Items</span>
+                    <span className="text-xs text-stone-400 font-mono font-bold">{PRODUCTS.length} Items</span>
                   </Link>
                 </div>
 
@@ -511,26 +540,30 @@ export function Navbar() {
                     Browse All Categories (8)
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    {CATEGORIES.map((cat) => (
-                      <Link
-                        key={cat.id}
-                        to={`/categories/${cat.slug}`}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center gap-2.5 p-2 rounded-xl bg-white dark:bg-white/5 border border-[#e7e2d9] dark:border-white/10"
-                      >
-                        <img
-                          src={cat.image}
-                          alt={cat.name}
-                          className="w-8 h-8 rounded-lg object-cover bg-stone-200 shrink-0"
-                        />
-                        <div className="min-w-0">
-                          <div className="text-xs font-semibold text-stone-900 dark:text-white truncate">
-                            {cat.name}
+                    {CATEGORIES.map((cat) => {
+                      const count = getCategoryProductCount(cat.id);
+                      return (
+                        <Link
+                          key={cat.id}
+                          to={`/categories/${cat.slug}`}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="flex items-center gap-2.5 p-2 rounded-xl bg-white dark:bg-white/5 border border-[#e7e2d9] dark:border-white/10"
+                        >
+                          <img
+                            src={cat.image}
+                            alt={cat.name}
+                            onError={handleImageError}
+                            className="w-8 h-8 rounded-lg object-cover bg-stone-200 shrink-0"
+                          />
+                          <div className="min-w-0">
+                            <div className="text-xs font-semibold text-stone-900 dark:text-white truncate">
+                              {cat.name}
+                            </div>
+                            <div className="text-[10px] text-stone-400">{count} items</div>
                           </div>
-                          <div className="text-[10px] text-stone-400">{cat.itemCount} items</div>
-                        </div>
-                      </Link>
-                    ))}
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
 

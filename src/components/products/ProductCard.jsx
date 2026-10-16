@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Heart, ShoppingBag, Eye, Scale, Star } from 'lucide-react';
 import { formatPrice, calculateDiscount } from '../../utils/formatters';
+import { handleImageError } from '../../utils/imageFallback';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { useCompare } from '../../context/CompareContext';
@@ -65,6 +66,10 @@ export function ProductCard({ product }) {
               src={product.images[0]}
               alt={product.name}
               onLoad={() => setImageLoaded(true)}
+              onError={(e) => {
+                setImageLoaded(true);
+                handleImageError(e);
+              }}
               className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-106"
               loading="lazy"
             />

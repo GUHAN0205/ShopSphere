@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
 import { CATEGORIES } from '../../data/categories';
+import { getCategoryProductCount } from '../../data/products';
+import { handleImageError } from '../../utils/imageFallback';
 
 export function FeaturedCategories() {
   // Let's create an editorial bento composition for the 8 categories:
@@ -60,6 +62,7 @@ export function FeaturedCategories() {
                   <img
                     src={category.image}
                     alt={category.name}
+                    onError={handleImageError}
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                     loading="lazy"
                   />
@@ -82,7 +85,7 @@ export function FeaturedCategories() {
                   {/* Content at Bottom */}
                   <div className="absolute bottom-4 inset-x-4 z-10 text-white">
                     <div className="text-[11px] font-semibold tracking-wider uppercase text-blue-300">
-                      {category.itemCount} Curated Pieces
+                      {getCategoryProductCount(category.id)} Curated Pieces
                     </div>
                     <h3 className={`font-bold font-editorial text-white mt-1 group-hover:translate-x-1 transition-transform ${isLarge ? 'text-2xl sm:text-3xl' : 'text-lg sm:text-xl'}`}>
                       {category.name}
