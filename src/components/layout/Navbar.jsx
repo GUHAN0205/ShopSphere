@@ -14,9 +14,9 @@ import {
   User,
   LogIn,
   LogOut,
-  ShieldCheck,
-  CheckCircle2,
-  Package
+  Package,
+  Layers,
+  ArrowUpRight
 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
@@ -33,6 +33,7 @@ export function Navbar() {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
   const userDropdownRef = useRef(null);
+  const categoriesDropdownRef = useRef(null);
 
   const { cartCount } = useCart();
   const { wishlistCount } = useWishlist();
@@ -43,7 +44,7 @@ export function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 15);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -67,12 +68,15 @@ export function Navbar() {
       if (userDropdownRef.current && !userDropdownRef.current.contains(e.target)) {
         setIsUserDropdownOpen(false);
       }
+      if (categoriesDropdownRef.current && !categoriesDropdownRef.current.contains(e.target)) {
+        setIsCategoriesDropdownOpen(false);
+      }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Close mobile menu on route change
+  // Close menus on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setIsCategoriesDropdownOpen(false);
@@ -90,46 +94,42 @@ export function Navbar() {
       <header
         className={`sticky top-0 z-40 w-full transition-all duration-300 ${
           isScrolled
-            ? 'glass-panel bg-[#070913]/90 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-black/20'
-            : 'bg-transparent border-b border-white/5'
+            ? 'bg-[#faf9f5]/92 dark:bg-[#0c0d11]/92 backdrop-blur-md border-b border-[#e7e2d9] dark:border-white/10 shadow-sm'
+            : 'bg-[#faf9f5] dark:bg-[#0c0d11] border-b border-[#e7e2d9]/60 dark:border-white/5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Brand Logo */}
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="relative w-10 h-10 rounded-2xl bg-gradient-to-tr from-cyan-500 via-indigo-600 to-violet-600 p-[2px] shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-500/40 transition-shadow">
-                <div className="w-full h-full bg-[#070913] rounded-[14px] flex items-center justify-center overflow-hidden">
-                  <div className="relative w-5 h-5">
-                    <span className="absolute inset-0 rounded-full bg-cyan-400/80 blur-xs group-hover:scale-125 transition-transform" />
-                    <span className="absolute inset-1 rounded-full bg-gradient-to-tr from-violet-500 to-cyan-400" />
-                  </div>
-                </div>
+            {/* Brand Identity */}
+            <Link to="/" className="flex items-center gap-3.5 group">
+              <div className="w-10 h-10 rounded-xl bg-[#121316] dark:bg-white text-white dark:text-[#121316] flex items-center justify-center font-bold tracking-tighter text-lg shadow-sm transition-transform group-hover:scale-105">
+                <span>S</span>
+                <span className="text-blue-500 font-black">.</span>
               </div>
 
               <div>
-                <span className="text-xl font-extrabold tracking-tight text-white flex items-center gap-1 font-display">
-                  Shop<span className="text-gradient-cyan">Sphere</span>
+                <span className="text-xl font-bold tracking-tight text-[#121316] dark:text-white flex items-center gap-1 font-editorial">
+                  Shop<span className="text-blue-600 dark:text-blue-400 font-sans tracking-normal font-semibold">Sphere</span>
                 </span>
-                <span className="block text-[10px] uppercase tracking-widest text-slate-400 font-medium -mt-1">
-                  Beyond Shopping
+                <span className="block text-[10px] uppercase tracking-widest text-stone-500 dark:text-stone-400 font-medium -mt-0.5">
+                  Find Your Next Favorite
                 </span>
               </div>
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-1">
+            <nav className="hidden lg:flex items-center gap-1.5">
               <NavLink
-                to="/"
+                to="/products?filter=new"
                 className={({ isActive }) =>
                   `px-3.5 py-2 rounded-xl text-sm font-medium transition-colors ${
                     isActive
-                      ? 'text-cyan-400 bg-cyan-500/10'
-                      : 'text-slate-300 hover:text-white hover:bg-white/5'
+                      ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10'
+                      : 'text-stone-700 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-white/5'
                   }`
                 }
               >
-                Home
+                New Arrivals
               </NavLink>
 
               <NavLink
@@ -137,53 +137,62 @@ export function Navbar() {
                 className={({ isActive }) =>
                   `px-3.5 py-2 rounded-xl text-sm font-medium transition-colors ${
                     isActive
-                      ? 'text-cyan-400 bg-cyan-500/10'
-                      : 'text-slate-300 hover:text-white hover:bg-white/5'
+                      ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10'
+                      : 'text-stone-700 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-white/5'
                   }`
                 }
               >
-                Catalog
+                Shop All
               </NavLink>
 
-              {/* Categories Dropdown */}
+              {/* Categories Mega Dropdown */}
               <div
                 className="relative"
+                ref={categoriesDropdownRef}
                 onMouseEnter={() => setIsCategoriesDropdownOpen(true)}
                 onMouseLeave={() => setIsCategoriesDropdownOpen(false)}
               >
                 <button
-                  className="flex items-center gap-1 px-3.5 py-2 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition-colors"
+                  onClick={() => setIsCategoriesDropdownOpen(!isCategoriesDropdownOpen)}
+                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-medium text-stone-700 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-white/5 transition-colors"
                 >
                   <span>Categories</span>
-                  <ChevronDown className="w-4 h-4 text-slate-400" />
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 text-stone-400 transition-transform ${
+                      isCategoriesDropdownOpen ? 'rotate-180 text-blue-600' : ''
+                    }`}
+                  />
                 </button>
 
                 <AnimatePresence>
                   {isCategoriesDropdownOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.18 }}
-                      className="absolute top-full left-0 mt-2 w-64 rounded-2xl glass-panel bg-[#0d1124]/95 border border-white/10 shadow-2xl p-2 z-50"
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 0.16 }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 w-[560px] rounded-2xl bg-[#faf9f5] dark:bg-[#12141c] border border-[#e7e2d9] dark:border-white/10 shadow-2xl p-4 z-50 grid grid-cols-2 gap-2"
                     >
-                      {CATEGORIES.map(cat => (
+                      {CATEGORIES.map((cat) => (
                         <Link
                           key={cat.id}
                           to={`/categories/${cat.slug}`}
-                          className="flex items-center justify-between p-2.5 rounded-xl hover:bg-white/5 group transition-colors"
+                          className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white dark:hover:bg-white/5 border border-transparent hover:border-[#e7e2d9] dark:hover:border-white/10 group transition-all"
                         >
-                          <div>
-                            <div className="text-sm font-semibold text-white group-hover:text-cyan-400 transition-colors">
+                          <img
+                            src={cat.image}
+                            alt={cat.name}
+                            className="w-11 h-11 rounded-lg object-cover bg-stone-200 dark:bg-stone-800 shrink-0 group-hover:scale-105 transition-transform"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <div className="text-xs font-semibold text-stone-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors truncate">
                               {cat.name}
                             </div>
-                            <div className="text-[11px] text-slate-400">
+                            <div className="text-[11px] text-stone-500 dark:text-stone-400">
                               {cat.itemCount} items
                             </div>
                           </div>
-                          <span className="text-[10px] text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
-                            Explore
-                          </span>
+                          <ArrowUpRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-blue-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                         </Link>
                       ))}
                     </motion.div>
@@ -192,29 +201,16 @@ export function Navbar() {
               </div>
 
               <NavLink
-                to="/categories/electronics"
-                className={({ isActive }) =>
-                  `px-3.5 py-2 rounded-xl text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'text-cyan-400 bg-cyan-500/10'
-                      : 'text-slate-300 hover:text-white hover:bg-white/5'
-                  }`
-                }
+                to="/#collections"
+                onClick={(e) => {
+                  if (location.pathname === '/') {
+                    e.preventDefault();
+                    document.getElementById('collections')?.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="px-3.5 py-2 rounded-xl text-sm font-medium text-stone-700 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-white/5 transition-colors"
               >
-                Electronics
-              </NavLink>
-
-              <NavLink
-                to="/categories/fashion"
-                className={({ isActive }) =>
-                  `px-3.5 py-2 rounded-xl text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'text-cyan-400 bg-cyan-500/10'
-                      : 'text-slate-300 hover:text-white hover:bg-white/5'
-                  }`
-                }
-              >
-                Avant Fashion
+                Featured Collections
               </NavLink>
             </nav>
 
@@ -223,12 +219,12 @@ export function Navbar() {
               {/* Search Trigger Button */}
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-slate-300 hover:text-white transition-all cursor-pointer"
+                className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-white/5 hover:bg-stone-100 dark:hover:bg-white/10 border border-[#e7e2d9] dark:border-white/10 text-xs font-medium text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white transition-all cursor-pointer shadow-xs"
                 aria-label="Search products"
               >
-                <Search className="w-4 h-4 text-cyan-400" />
-                <span className="hidden xl:inline">Search gear...</span>
-                <kbd className="hidden sm:inline-flex text-[10px] text-slate-400 bg-white/10 px-1.5 py-0.5 rounded border border-white/10">
+                <Search className="w-4 h-4 text-stone-500 dark:text-stone-400" />
+                <span className="hidden xl:inline">Search curated goods...</span>
+                <kbd className="hidden sm:inline-flex text-[10px] text-stone-500 dark:text-slate-400 bg-stone-100 dark:bg-white/10 px-1.5 py-0.5 rounded border border-stone-200 dark:border-white/10">
                   Ctrl K
                 </kbd>
               </button>
@@ -236,13 +232,13 @@ export function Navbar() {
               {/* Theme Switcher */}
               <button
                 onClick={toggleTheme}
-                className="p-2.5 rounded-xl text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors cursor-pointer"
+                className="p-2.5 rounded-xl text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white bg-white dark:bg-white/5 hover:bg-stone-100 dark:hover:bg-white/10 border border-[#e7e2d9] dark:border-white/10 transition-colors cursor-pointer shadow-xs"
                 aria-label="Toggle theme"
               >
                 {isDark ? (
                   <Sun className="w-4 h-4 text-amber-400" />
                 ) : (
-                  <Moon className="w-4 h-4 text-violet-400" />
+                  <Moon className="w-4 h-4 text-stone-700" />
                 )}
               </button>
 
@@ -252,56 +248,56 @@ export function Navbar() {
                   <div>
                     <button
                       onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
-                      className="flex items-center gap-2 p-1.5 pr-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs text-white transition-all cursor-pointer group"
+                      className="flex items-center gap-2 p-1.5 pr-2.5 rounded-xl bg-white dark:bg-white/5 hover:bg-stone-100 dark:hover:bg-white/10 border border-[#e7e2d9] dark:border-white/10 text-xs font-medium text-stone-900 dark:text-white transition-all cursor-pointer shadow-xs"
                       aria-label="Account options"
                     >
                       {user.avatar ? (
                         <img
                           src={user.avatar}
                           alt={user.name}
-                          className="w-7 h-7 rounded-lg object-cover border border-cyan-400/50"
+                          className="w-7 h-7 rounded-lg object-cover border border-[#e7e2d9] dark:border-white/10"
                         />
                       ) : (
-                        <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-cyan-500 to-violet-600 text-[11px] font-bold text-white flex items-center justify-center shadow-sm">
+                        <div className="w-7 h-7 rounded-lg bg-[#121316] dark:bg-white text-white dark:text-[#121316] text-[11px] font-bold flex items-center justify-center">
                           {user.name.charAt(0)}
                         </div>
                       )}
                       <span className="hidden sm:inline font-semibold text-xs max-w-[90px] truncate">
                         {user.name.split(' ')[0]}
                       </span>
-                      <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-white transition-colors" />
+                      <ChevronDown className="w-3.5 h-3.5 text-stone-400" />
                     </button>
 
                     <AnimatePresence>
                       {isUserDropdownOpen && (
                         <motion.div
-                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          initial={{ opacity: 0, y: 8, scale: 0.96 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          exit={{ opacity: 0, y: 8, scale: 0.96 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute right-0 top-full mt-2 w-72 rounded-2xl glass-panel bg-[#0d1124]/98 border border-white/15 shadow-2xl p-4 z-50 text-slate-200"
+                          className="absolute right-0 top-full mt-2 w-72 rounded-2xl bg-[#faf9f5] dark:bg-[#12141c] border border-[#e7e2d9] dark:border-white/10 shadow-2xl p-4 z-50 text-stone-800 dark:text-stone-200"
                         >
-                          <div className="flex items-center gap-3 pb-3 border-b border-white/10">
+                          <div className="flex items-center gap-3 pb-3 border-b border-[#e7e2d9] dark:border-white/10">
                             {user.avatar ? (
                               <img
                                 src={user.avatar}
                                 alt={user.name}
-                                className="w-11 h-11 rounded-xl object-cover border border-cyan-400/40"
+                                className="w-11 h-11 rounded-xl object-cover border border-[#e7e2d9] dark:border-white/10"
                               />
                             ) : (
-                              <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-cyan-500 to-violet-600 text-sm font-bold text-white flex items-center justify-center">
+                              <div className="w-11 h-11 rounded-xl bg-[#121316] dark:bg-white text-white dark:text-[#121316] text-sm font-bold flex items-center justify-center">
                                 {user.name.charAt(0)}
                               </div>
                             )}
                             <div className="flex-1 min-w-0">
-                              <div className="font-bold text-white text-sm truncate flex items-center gap-1.5">
-                                <span>{user.name}</span>
+                              <div className="font-bold text-stone-900 dark:text-white text-sm truncate">
+                                {user.name}
                               </div>
-                              <div className="text-[11px] text-slate-400 truncate">
+                              <div className="text-[11px] text-stone-500 dark:text-stone-400 truncate">
                                 {user.email}
                               </div>
-                              <span className="inline-block text-[10px] font-bold uppercase tracking-wide text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-full border border-cyan-500/20 mt-1">
-                                {user.tier || 'Member'}
+                              <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-200 dark:border-blue-500/20 mt-1">
+                                {user.tier || 'Collector Member'}
                               </span>
                             </div>
                           </div>
@@ -310,13 +306,13 @@ export function Navbar() {
                             <Link
                               to="/wishlist"
                               onClick={() => setIsUserDropdownOpen(false)}
-                              className="flex items-center justify-between p-2 rounded-xl hover:bg-white/5 transition-colors"
+                              className="flex items-center justify-between p-2 rounded-xl hover:bg-white dark:hover:bg-white/5 transition-colors"
                             >
                               <span className="flex items-center gap-2">
-                                <Heart className="w-3.5 h-3.5 text-pink-400" />
+                                <Heart className="w-3.5 h-3.5 text-orange-600 dark:text-orange-400" />
                                 <span>Saved Wishlist</span>
                               </span>
-                              <span className="font-mono text-[11px] text-slate-400">
+                              <span className="font-mono text-[11px] text-stone-500 dark:text-stone-400">
                                 {wishlistCount}
                               </span>
                             </Link>
@@ -324,13 +320,13 @@ export function Navbar() {
                             <Link
                               to="/cart"
                               onClick={() => setIsUserDropdownOpen(false)}
-                              className="flex items-center justify-between p-2 rounded-xl hover:bg-white/5 transition-colors"
+                              className="flex items-center justify-between p-2 rounded-xl hover:bg-white dark:hover:bg-white/5 transition-colors"
                             >
                               <span className="flex items-center gap-2">
-                                <ShoppingBag className="w-3.5 h-3.5 text-cyan-400" />
+                                <ShoppingBag className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                                 <span>Shopping Bag</span>
                               </span>
-                              <span className="font-mono text-[11px] text-slate-400">
+                              <span className="font-mono text-[11px] text-stone-500 dark:text-stone-400">
                                 {cartCount}
                               </span>
                             </Link>
@@ -338,23 +334,23 @@ export function Navbar() {
                             <Link
                               to="/order-success"
                               onClick={() => setIsUserDropdownOpen(false)}
-                              className="flex items-center justify-between p-2 rounded-xl hover:bg-white/5 transition-colors"
+                              className="flex items-center justify-between p-2 rounded-xl hover:bg-white dark:hover:bg-white/5 transition-colors"
                             >
                               <span className="flex items-center gap-2">
-                                <Package className="w-3.5 h-3.5 text-violet-400" />
-                                <span>Recent Manifest</span>
+                                <Package className="w-3.5 h-3.5 text-stone-600 dark:text-stone-400" />
+                                <span>Recent Orders</span>
                               </span>
-                              <span className="text-[10px] text-slate-500">View</span>
+                              <span className="text-[10px] text-stone-400">View</span>
                             </Link>
                           </div>
 
-                          <div className="pt-2 border-t border-white/10 flex items-center justify-between">
-                            <span className="text-[10px] text-slate-500">
-                              Demo Sandbox Mode
+                          <div className="pt-2 border-t border-[#e7e2d9] dark:border-white/10 flex items-center justify-between">
+                            <span className="text-[10px] text-stone-400">
+                              Simulated Demo Account
                             </span>
                             <button
                               onClick={handleSignOut}
-                              className="flex items-center gap-1.5 text-xs text-rose-400 hover:text-rose-300 font-semibold px-2.5 py-1.5 rounded-lg hover:bg-rose-500/10 transition-colors"
+                              className="flex items-center gap-1.5 text-xs text-rose-600 dark:text-rose-400 hover:text-rose-700 font-semibold px-2.5 py-1.5 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-colors"
                             >
                               <LogOut className="w-3.5 h-3.5" />
                               <span>Sign Out</span>
@@ -367,9 +363,9 @@ export function Navbar() {
                 ) : (
                   <Link
                     to="/login"
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-cyan-500/15 via-indigo-500/15 to-violet-500/15 hover:from-cyan-500/25 hover:to-violet-500/25 text-xs font-semibold text-white border border-cyan-500/30 hover:border-cyan-400 transition-all shadow-sm"
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#121316] dark:bg-white text-white dark:text-[#121316] hover:bg-stone-800 dark:hover:bg-stone-100 text-xs font-semibold transition-all shadow-sm"
                   >
-                    <User className="w-3.5 h-3.5 text-cyan-400" />
+                    <User className="w-3.5 h-3.5" />
                     <span>Sign In</span>
                   </Link>
                 )}
@@ -378,31 +374,35 @@ export function Navbar() {
               {/* Wishlist Icon */}
               <Link
                 to="/wishlist"
-                className="relative p-2.5 rounded-xl text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+                className="relative p-2.5 rounded-xl text-stone-700 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white bg-white dark:bg-white/5 hover:bg-stone-100 dark:hover:bg-white/10 border border-[#e7e2d9] dark:border-white/10 transition-colors shadow-xs"
                 aria-label={`Wishlist, ${wishlistCount} items`}
               >
-                <Heart className={`w-4 h-4 ${wishlistCount > 0 ? 'text-pink-400 fill-pink-400' : ''}`} />
+                <Heart className={`w-4 h-4 ${wishlistCount > 0 ? 'text-orange-600 fill-orange-600' : ''}`} />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-pink-500 text-[10px] font-bold text-white flex items-center justify-center shadow-md">
+                  <motion.span
+                    initial={{ scale: 0.7 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-orange-600 text-[10px] font-bold text-white flex items-center justify-center shadow-xs"
+                  >
                     {wishlistCount}
-                  </span>
+                  </motion.span>
                 )}
               </Link>
 
-              {/* Shopping Cart Icon with animated badge */}
+              {/* Shopping Bag Icon with live count */}
               <Link
                 to="/cart"
-                className="relative flex items-center gap-2 p-2.5 sm:px-3 sm:py-2.5 rounded-xl bg-gradient-to-r from-cyan-500/15 to-violet-500/15 hover:from-cyan-500/25 hover:to-violet-500/25 border border-cyan-500/30 text-white transition-all group"
+                className="relative flex items-center gap-2 p-2.5 sm:px-3 sm:py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-all shadow-xs group"
                 aria-label={`Cart, ${cartCount} items`}
               >
-                <ShoppingBag className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
-                <span className="hidden sm:inline text-xs font-semibold">Cart</span>
+                <ShoppingBag className="w-4 h-4 group-hover:scale-105 transition-transform" />
+                <span className="hidden sm:inline text-xs font-semibold">Bag</span>
                 {cartCount > 0 && (
                   <motion.span
                     key={cartCount}
                     initial={{ scale: 0.6 }}
                     animate={{ scale: 1 }}
-                    className="w-4 h-4 rounded-full bg-cyan-400 text-slate-950 text-[10px] font-extrabold flex items-center justify-center shadow-md"
+                    className="w-4 h-4 rounded-full bg-white text-[#121316] text-[10px] font-extrabold flex items-center justify-center shadow-xs"
                   >
                     {cartCount}
                   </motion.span>
@@ -412,7 +412,7 @@ export function Navbar() {
               {/* Mobile Menu Toggle */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-2.5 rounded-xl text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+                className="lg:hidden p-2.5 rounded-xl text-stone-700 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white bg-white dark:bg-white/5 hover:bg-stone-100 dark:hover:bg-white/10 border border-[#e7e2d9] dark:border-white/10 transition-colors shadow-xs"
                 aria-label="Toggle mobile menu"
               >
                 {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -428,124 +428,131 @@ export function Navbar() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden glass-panel bg-[#070913]/98 border-t border-white/10 overflow-hidden"
+              className="lg:hidden bg-[#faf9f5] dark:bg-[#0c0d11] border-t border-[#e7e2d9] dark:border-white/10 overflow-hidden"
             >
-              <div className="px-4 py-6 space-y-4 max-h-[85vh] overflow-y-auto">
+              <div className="px-4 py-6 space-y-5 max-h-[85vh] overflow-y-auto">
                 {/* Mobile Auth Header */}
                 {isAuthenticated ? (
-                  <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-between">
+                  <div className="p-3.5 rounded-2xl bg-white dark:bg-white/5 border border-[#e7e2d9] dark:border-white/10 flex items-center justify-between">
                     <div className="flex items-center gap-3 min-w-0">
                       {user.avatar ? (
                         <img
                           src={user.avatar}
                           alt={user.name}
-                          className="w-10 h-10 rounded-xl object-cover border border-cyan-400/40 shrink-0"
+                          className="w-10 h-10 rounded-xl object-cover border border-[#e7e2d9] dark:border-white/10 shrink-0"
                         />
                       ) : (
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-violet-600 text-sm font-bold text-white flex items-center justify-center shrink-0">
+                        <div className="w-10 h-10 rounded-xl bg-[#121316] dark:bg-white text-white dark:text-[#121316] text-sm font-bold flex items-center justify-center shrink-0">
                           {user.name.charAt(0)}
                         </div>
                       )}
                       <div className="min-w-0">
-                        <div className="text-sm font-bold text-white truncate">
+                        <div className="text-sm font-bold text-stone-900 dark:text-white truncate">
                           {user.name}
                         </div>
-                        <div className="text-[11px] text-cyan-400">
-                          {user.tier || 'Member'}
+                        <div className="text-xs text-stone-500 dark:text-stone-400 truncate">
+                          {user.email}
                         </div>
                       </div>
                     </div>
-
                     <button
                       onClick={handleSignOut}
-                      className="p-2 rounded-xl text-rose-400 hover:bg-rose-500/10 text-xs font-semibold flex items-center gap-1"
+                      className="text-xs font-semibold text-rose-600 dark:text-rose-400 p-2 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded-lg shrink-0"
                     >
-                      <LogOut className="w-4 h-4" />
-                      <span>Sign Out</span>
+                      Sign Out
                     </button>
                   </div>
                 ) : (
-                  <div className="p-3.5 rounded-2xl bg-gradient-to-r from-cyan-500/10 via-violet-500/10 to-transparent border border-cyan-500/20 space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-white">Client Portal</span>
-                      <span className="text-[10px] text-cyan-400 bg-cyan-500/15 px-2 py-0.5 rounded-full border border-cyan-500/20">
-                        Demo Mode
-                      </span>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      <Link
-                        to="/login"
-                        className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-cyan-500 text-slate-950 text-xs font-bold shadow-md shadow-cyan-500/20"
-                      >
-                        <LogIn className="w-3.5 h-3.5" />
-                        <span>Sign In</span>
-                      </Link>
-                      <Link
-                        to="/register"
-                        className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-white text-xs font-semibold"
-                      >
-                        <span>Create Account</span>
-                      </Link>
-                    </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Link
+                      to="/login"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#121316] dark:bg-white text-white dark:text-[#121316] text-xs font-semibold shadow-xs"
+                    >
+                      <LogIn className="w-4 h-4" />
+                      <span>Sign In</span>
+                    </Link>
+                    <Link
+                      to="/register"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-white dark:bg-white/5 border border-[#e7e2d9] dark:border-white/10 text-stone-800 dark:text-stone-200 text-xs font-semibold shadow-xs"
+                    >
+                      <span>Register</span>
+                    </Link>
                   </div>
                 )}
 
+                {/* Primary Nav Links */}
                 <div className="space-y-1">
-                  <NavLink
-                    to="/"
-                    className={({ isActive }) =>
-                      `block px-4 py-2.5 rounded-xl text-base font-semibold ${
-                        isActive ? 'text-cyan-400 bg-cyan-500/10' : 'text-slate-300 hover:text-white'
-                      }`
-                    }
+                  <Link
+                    to="/products?filter=new"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between p-3 rounded-xl hover:bg-stone-100 dark:hover:bg-white/5 text-sm font-semibold text-stone-900 dark:text-white"
                   >
-                    Home
-                  </NavLink>
-                  <NavLink
+                    <span>New Arrivals</span>
+                    <span className="text-[10px] uppercase font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 px-2 py-0.5 rounded">
+                      Latest
+                    </span>
+                  </Link>
+
+                  <Link
                     to="/products"
-                    className={({ isActive }) =>
-                      `block px-4 py-2.5 rounded-xl text-base font-semibold ${
-                        isActive ? 'text-cyan-400 bg-cyan-500/10' : 'text-slate-300 hover:text-white'
-                      }`
-                    }
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between p-3 rounded-xl hover:bg-stone-100 dark:hover:bg-white/5 text-sm font-semibold text-stone-900 dark:text-white"
                   >
-                    All Products Catalog
-                  </NavLink>
-                  <NavLink
-                    to="/wishlist"
-                    className="flex items-center justify-between px-4 py-2.5 rounded-xl text-base font-semibold text-slate-300 hover:text-white"
-                  >
-                    <span>Saved Wishlist</span>
-                    <span className="text-xs bg-pink-500/20 text-pink-400 px-2 py-0.5 rounded-full font-mono">
-                      {wishlistCount} items
-                    </span>
-                  </NavLink>
-                  <NavLink
-                    to="/cart"
-                    className="flex items-center justify-between px-4 py-2.5 rounded-xl text-base font-semibold text-slate-300 hover:text-white"
-                  >
-                    <span>Shopping Bag</span>
-                    <span className="text-xs bg-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded-full font-mono">
-                      {cartCount} items
-                    </span>
-                  </NavLink>
+                    <span>Shop All Products</span>
+                    <span className="text-xs text-stone-400">48 Items</span>
+                  </Link>
                 </div>
 
-                <div className="pt-4 border-t border-white/10">
-                  <div className="text-xs uppercase font-bold text-slate-400 px-4 mb-2 tracking-wider">
-                    Categories
+                {/* All 8 Categories List */}
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-wider text-stone-400 dark:text-stone-500 px-3 mb-2">
+                    Browse All Categories (8)
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    {CATEGORIES.map(cat => (
+                    {CATEGORIES.map((cat) => (
                       <Link
                         key={cat.id}
                         to={`/categories/${cat.slug}`}
-                        className="p-3 rounded-xl bg-white/5 border border-white/5 text-sm font-medium text-slate-200 hover:text-cyan-300"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center gap-2.5 p-2 rounded-xl bg-white dark:bg-white/5 border border-[#e7e2d9] dark:border-white/10"
                       >
-                        {cat.name}
+                        <img
+                          src={cat.image}
+                          alt={cat.name}
+                          className="w-8 h-8 rounded-lg object-cover bg-stone-200 shrink-0"
+                        />
+                        <div className="min-w-0">
+                          <div className="text-xs font-semibold text-stone-900 dark:text-white truncate">
+                            {cat.name}
+                          </div>
+                          <div className="text-[10px] text-stone-400">{cat.itemCount} items</div>
+                        </div>
                       </Link>
                     ))}
                   </div>
+                </div>
+
+                {/* Quick Shortcuts */}
+                <div className="pt-2 border-t border-[#e7e2d9] dark:border-white/10 flex items-center justify-between text-xs">
+                  <Link
+                    to="/wishlist"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-1.5 text-stone-700 dark:text-stone-300 font-medium"
+                  >
+                    <Heart className="w-4 h-4 text-orange-600" />
+                    <span>Wishlist ({wishlistCount})</span>
+                  </Link>
+
+                  <Link
+                    to="/cart"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-1.5 text-stone-700 dark:text-stone-300 font-medium"
+                  >
+                    <ShoppingBag className="w-4 h-4 text-blue-600" />
+                    <span>Bag ({cartCount})</span>
+                  </Link>
                 </div>
               </div>
             </motion.div>
@@ -554,10 +561,7 @@ export function Navbar() {
       </header>
 
       {/* Global Search Overlay */}
-      <SearchOverlay
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-      />
+      <SearchOverlay isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>
   );
 }

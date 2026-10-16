@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Truck, RefreshCw, Headphones, ArrowRight, Heart } from 'lucide-react';
+import { ShieldCheck, Truck, RotateCcw, Headphones } from 'lucide-react';
 import { CATEGORIES } from '../../data/categories';
 
 function GithubIcon({ className = "w-4 h-4" }) {
@@ -39,56 +39,53 @@ function LinkedinIcon({ className = "w-4 h-4" }) {
 
 export function Footer() {
   return (
-    <footer className="relative bg-[#05070e] border-t border-white/10 pt-16 pb-12 overflow-hidden text-slate-400">
-      {/* Decorative ambient gradient */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gradient-to-b from-cyan-500/10 to-transparent blur-3xl pointer-events-none" />
-
+    <footer className="relative bg-[#f4f1ea] dark:bg-[#07080b] border-t border-[#e7e2d9] dark:border-white/10 pt-16 pb-12 overflow-hidden text-stone-600 dark:text-stone-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
-          {/* Brand Info */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-[#e7e2d9] dark:border-white/10">
+          
+          {/* Brand Identity & Mission */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center gap-3 group inline-flex">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-600 to-violet-600 p-[2px] shadow-lg shadow-cyan-500/20">
-                <div className="w-full h-full bg-[#070913] rounded-[10px] flex items-center justify-center">
-                  <div className="w-4 h-4 rounded-full bg-gradient-to-tr from-cyan-400 to-violet-500" />
-                </div>
+              <div className="w-9 h-9 rounded-xl bg-[#121316] dark:bg-white text-white dark:text-[#121316] flex items-center justify-center font-bold tracking-tighter text-base shadow-xs">
+                <span>S</span>
+                <span className="text-blue-500 font-black">.</span>
               </div>
-              <span className="text-xl font-extrabold tracking-tight text-white font-display">
-                Shop<span className="text-gradient-cyan">Sphere</span>
+              <span className="text-xl font-bold tracking-tight text-stone-900 dark:text-white font-editorial">
+                Shop<span className="text-blue-600 dark:text-blue-400 font-sans tracking-normal font-semibold">Sphere</span>
               </span>
             </Link>
 
-            <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
-              Beyond Shopping. Curating high-performance acoustic instruments, ergonomic spatial design, and architectural technical apparel for the modern visionary.
+            <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 leading-relaxed max-w-sm font-normal">
+              Find Your Next Favorite. Curating high-performance acoustic instruments, ergonomic spatial design, precision horology, and architectural apparel for intentional living.
             </p>
 
-            <div className="flex items-center gap-3 pt-2">
+            <div className="flex items-center gap-2.5 pt-2">
               <a
                 href="https://github.com/GUHAN0205/ShopSphere"
                 target="_blank"
                 rel="noreferrer"
-                className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-colors"
+                className="p-2.5 rounded-xl bg-white dark:bg-white/5 hover:bg-stone-200 dark:hover:bg-white/10 text-stone-700 dark:text-stone-300 border border-[#e7e2d9] dark:border-white/10 transition-colors shadow-xs"
                 aria-label="GitHub Repository"
               >
                 <GithubIcon className="w-4 h-4" />
               </a>
               <a
                 href="#social"
-                className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-colors"
+                className="p-2.5 rounded-xl bg-white dark:bg-white/5 hover:bg-stone-200 dark:hover:bg-white/10 text-stone-700 dark:text-stone-300 border border-[#e7e2d9] dark:border-white/10 transition-colors shadow-xs"
                 aria-label="Twitter Profile"
               >
                 <TwitterIcon className="w-4 h-4" />
               </a>
               <a
                 href="#social"
-                className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-colors"
+                className="p-2.5 rounded-xl bg-white dark:bg-white/5 hover:bg-stone-200 dark:hover:bg-white/10 text-stone-700 dark:text-stone-300 border border-[#e7e2d9] dark:border-white/10 transition-colors shadow-xs"
                 aria-label="Instagram Profile"
               >
                 <InstagramIcon className="w-4 h-4" />
               </a>
               <a
                 href="#social"
-                className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-colors"
+                className="p-2.5 rounded-xl bg-white dark:bg-white/5 hover:bg-stone-200 dark:hover:bg-white/10 text-stone-700 dark:text-stone-300 border border-[#e7e2d9] dark:border-white/10 transition-colors shadow-xs"
                 aria-label="LinkedIn Profile"
               >
                 <LinkedinIcon className="w-4 h-4" />
@@ -96,20 +93,20 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Quick Categories */}
+          {/* All 8 Categories */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-4">
-              Curated Collections
+            <h4 className="text-xs font-bold uppercase tracking-wider text-stone-900 dark:text-white mb-4">
+              Curated Hubs (8)
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2 text-xs">
               <li>
-                <Link to="/products" className="hover:text-cyan-400 transition-colors">
-                  All Products
+                <Link to="/products" className="hover:text-blue-600 dark:hover:text-blue-400 font-semibold transition-colors">
+                  All 48 Products
                 </Link>
               </li>
               {CATEGORIES.map(cat => (
                 <li key={cat.id}>
-                  <Link to={`/categories/${cat.slug}`} className="hover:text-cyan-400 transition-colors">
+                  <Link to={`/categories/${cat.slug}`} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                     {cat.name}
                   </Link>
                 </li>
@@ -119,67 +116,71 @@ export function Footer() {
 
           {/* Navigation & Shopping */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-4">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-stone-900 dark:text-white mb-4">
               Client Services
             </h4>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-2.5 text-xs">
               <li>
-                <Link to="/cart" className="hover:text-cyan-400 transition-colors">
+                <Link to="/cart" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                   Shopping Bag
                 </Link>
               </li>
               <li>
-                <Link to="/wishlist" className="hover:text-cyan-400 transition-colors">
+                <Link to="/wishlist" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                   Saved Wishlist
                 </Link>
               </li>
               <li>
-                <Link to="/checkout" className="hover:text-cyan-400 transition-colors">
+                <Link to="/checkout" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                   Express Checkout
                 </Link>
               </li>
               <li>
-                <span className="text-slate-500 cursor-default">Order Tracking (Live)</span>
+                <Link to="/login" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Account Access
+                </Link>
               </li>
               <li>
-                <span className="text-slate-500 cursor-default">Global Warranty Guarantee</span>
+                <Link to="/order-success" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  Recent Orders
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Trust & Guarantees */}
+          {/* Trust Commitments */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-4">
-              Store Confidence
+            <h4 className="text-xs font-bold uppercase tracking-wider text-stone-900 dark:text-white mb-4">
+              Store Standards
             </h4>
             <ul className="space-y-3 text-xs">
               <li className="flex items-start gap-2.5">
-                <Truck className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                <span>Complimentary Express Courier on orders $150+</span>
+                <Truck className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+                <span>Complimentary tracked shipping on orders $150+</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <RefreshCw className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                <span>30-Day Hassle-Free Exchange & Return Window</span>
+                <RotateCcw className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+                <span>30-Day Hassle-Free Return & Exchange Window</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+                <ShieldCheck className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
                 <span>2-Year Manufacturer Replacement Warranty</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <Headphones className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
-                <span>Direct Concierge Support 24 Hours / 7 Days</span>
+                <Headphones className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+                <span>Product Concierge Advisory Mon–Fri</span>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Credits & Status */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} ShopSphere Inc. All rights reserved. Beyond Shopping.</p>
+        {/* Bottom Legal & Demo Disclaimer */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500">
+          <p>© {new Date().getFullYear()} ShopSphere 2.0. Editorial Luxury Commerce. Demo Experience.</p>
           <div className="flex items-center gap-6">
-            <span className="hover:text-slate-400 transition-colors cursor-pointer">Privacy Protocol</span>
-            <span className="hover:text-slate-400 transition-colors cursor-pointer">Terms of Service</span>
-            <span className="hover:text-slate-400 transition-colors cursor-pointer">Cookie Preferences</span>
+            <span className="hover:text-stone-800 dark:hover:text-stone-300 transition-colors cursor-pointer">Privacy Protocol</span>
+            <span className="hover:text-stone-800 dark:hover:text-stone-300 transition-colors cursor-pointer">Terms of Service</span>
+            <span className="hover:text-stone-800 dark:hover:text-stone-300 transition-colors cursor-pointer">Cookie Preferences</span>
           </div>
         </div>
       </div>

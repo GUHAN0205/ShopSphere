@@ -1,168 +1,159 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, ShieldCheck, Zap, Star } from 'lucide-react';
+import { ArrowRight, Sparkles, Star, Compass, ArrowUpRight } from 'lucide-react';
 import { Button } from '../common/Button';
-import { Badge } from '../common/Badge';
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden pt-8 pb-20 md:pt-16 md:pb-32">
-      {/* Background Ambient Glow Orbs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-cyan-500/15 via-violet-600/15 to-pink-500/10 blur-[130px] rounded-full pointer-events-none" />
-      <div className="absolute top-1/3 -left-40 w-96 h-96 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
-      <div className="absolute top-1/2 -right-40 w-96 h-96 bg-violet-600/10 blur-[100px] rounded-full pointer-events-none" />
+    <section className="relative overflow-hidden pt-8 pb-16 md:pt-14 md:pb-24 bg-[#faf9f5] dark:bg-[#0c0d11] text-[#121316] dark:text-[#f3efe6]">
+      {/* Subtle architectural background grid */}
+      <div className="absolute inset-0 bg-[radial-gradient(#d5cfc4_1px,transparent_1px)] dark:bg-[radial-gradient(#262a36_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Text Column */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+          
+          {/* Left Column: Magazine Typography & Editorial Lead */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="lg:col-span-7 space-y-6 text-center lg:text-left"
+            className="lg:col-span-7 space-y-6 text-left"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-semibold backdrop-blur-md">
-              <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-spin-slow" />
-              <span>Next-Generation Curated Commerce</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-              <span className="text-white">Fall 2026</span>
+            {/* Seasonal Tag */}
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-stone-200/60 dark:bg-stone-800/60 border border-stone-300 dark:border-stone-700/60 text-stone-800 dark:text-stone-300 text-xs font-semibold tracking-wider uppercase">
+              <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 animate-pulse" />
+              <span>Vol. 04 — Curated Autumn / Winter 2026</span>
+              <span className="text-stone-400 dark:text-stone-600">|</span>
+              <span className="text-stone-600 dark:text-stone-400 font-mono text-[11px]">48 Selected Objects</span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl xl:text-7xl font-extrabold text-white tracking-tight leading-[1.08] font-display">
-              Beyond Shopping. <br />
-              <span className="text-gradient-cosmic">Pure Innovation.</span>
+            {/* Editorial Headline */}
+            <h1 className="text-4xl sm:text-6xl lg:text-[4.25rem] font-bold tracking-tight text-[#121316] dark:text-white leading-[1.06] font-editorial">
+              Find Your Next <br />
+              <span className="italic font-normal text-stone-700 dark:text-stone-300">Favorite.</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
-              Immerse yourself in precision-machined audio instruments, aerospace titanium horology, architectural technical apparel, and sculptural living objects designed for the forward-thinking.
+            {/* Supporting Copy */}
+            <p className="text-base sm:text-lg text-stone-600 dark:text-stone-300 max-w-xl leading-relaxed font-sans font-normal">
+              An intentional edit of precision audio, architectural technical apparel, horological crafts, and sculptural homeware designed for discerning modern life.
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
               <Link to="/products">
                 <Button
                   variant="primary"
                   size="lg"
                   icon={ArrowRight}
                   iconPosition="right"
-                  className="w-full sm:w-auto glow-cyan"
+                  className="w-full sm:w-auto shadow-md"
                 >
-                  Explore All Products
+                  Explore Collection
                 </Button>
               </Link>
 
-              <Link to="/categories/electronics">
+              <Link to="/products?filter=new">
                 <Button
                   variant="secondary"
                   size="lg"
                   className="w-full sm:w-auto"
                 >
-                  View Flagship Audio
+                  New Arrivals (2026)
                 </Button>
               </Link>
             </div>
 
-            {/* Micro Highlights */}
-            <div className="pt-6 border-t border-white/10 grid grid-cols-3 gap-4 text-left">
+            {/* Editorial Curator Trust Row */}
+            <div className="pt-8 mt-4 border-t border-[#e7e2d9] dark:border-white/10 grid grid-cols-3 gap-6 max-w-lg">
               <div>
-                <div className="text-2xl font-bold text-white font-display">4.9/5</div>
-                <div className="text-xs text-slate-400 mt-0.5">Audited Satisfaction</div>
+                <div className="text-2xl font-bold font-editorial text-stone-900 dark:text-white">8</div>
+                <div className="text-xs text-stone-500 dark:text-stone-400 mt-0.5 uppercase tracking-wider font-semibold">Specialty Hubs</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-cyan-400 font-display">100%</div>
-                <div className="text-xs text-slate-400 mt-0.5">Authenticity Guaranteed</div>
+                <div className="text-2xl font-bold font-editorial text-stone-900 dark:text-white">48+</div>
+                <div className="text-xs text-stone-500 dark:text-stone-400 mt-0.5 uppercase tracking-wider font-semibold">Curated Designs</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-violet-400 font-display">2-Year</div>
-                <div className="text-xs text-slate-400 mt-0.5">Worldwide Warranty</div>
+                <div className="text-2xl font-bold font-editorial text-blue-600 dark:text-blue-400">4.92 ★</div>
+                <div className="text-xs text-stone-500 dark:text-stone-400 mt-0.5 uppercase tracking-wider font-semibold">Collector Rating</div>
               </div>
             </div>
           </motion.div>
 
-          {/* Right Hero Visual Showcase */}
+          {/* Right Column: Asymmetric Magazine Composition */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            initial={{ opacity: 0, scale: 0.96, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
+            transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
             className="lg:col-span-5 relative"
           >
-            {/* Main Showcase Hero Card */}
-            <div className="relative rounded-3xl glass-card bg-slate-900/70 border border-white/15 p-4 shadow-2xl shadow-cyan-950/40 group overflow-hidden">
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-slate-950 border border-white/10">
-                <img
-                  src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1000&auto=format&fit=crop"
-                  alt="SpherePulse Pro ANC Flagship Headphones"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+            {/* Primary Large Editorial Image */}
+            <div className="relative rounded-3xl overflow-hidden bg-stone-200 dark:bg-stone-900 border border-[#e7e2d9] dark:border-white/10 shadow-2xl aspect-[4/5] group">
+              <img
+                src="https://images.unsplash.com/photo-1508296695146-257a814070b4?q=80&w=1200&auto=format&fit=crop"
+                alt="Curated contemporary design objects and minimalist lifestyle"
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-104"
+              />
 
-                {/* Overlaid Badges */}
-                <div className="absolute top-4 left-4 flex flex-col gap-2">
-                  <Badge variant="cyan" size="sm">Editor's Choice</Badge>
-                  <span className="text-[11px] font-bold text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20">
-                    Spatial Telemetry
-                  </span>
-                </div>
+              {/* Subtle top stamp */}
+              <div className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-white/90 dark:bg-[#12141c]/90 backdrop-blur-md border border-[#e7e2d9] dark:border-white/10 text-[11px] font-bold uppercase tracking-widest text-stone-900 dark:text-white shadow-xs">
+                Featured Editorial
+              </div>
 
-                <div className="absolute bottom-4 inset-x-4 p-4 rounded-2xl glass-panel bg-[#0d1124]/90 border border-white/20 backdrop-blur-xl">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs text-cyan-400 uppercase font-bold tracking-wider">
-                      Featured Instrument
-                    </span>
-                    <div className="flex items-center text-amber-400 text-xs">
-                      <Star className="w-3.5 h-3.5 fill-amber-400" />
-                      <span className="ml-1 text-white font-semibold">4.9</span>
-                    </div>
-                  </div>
-                  <h3 className="text-lg font-bold text-white truncate">
-                    SpherePulse Pro ANC Headphones
-                  </h3>
-                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/10">
-                    <div>
-                      <span className="text-xl font-extrabold text-white">$349.99</span>
-                      <span className="text-xs text-slate-400 line-through ml-2">$429.99</span>
-                    </div>
-                    <Link
-                      to="/products/prod-01"
-                      className="px-3 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold transition-colors"
-                    >
-                      Inspect
-                    </Link>
-                  </div>
+              {/* Bottom Image Overlay Strip */}
+              <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-black/85 via-black/40 to-transparent text-white z-10">
+                <div className="text-[10px] uppercase font-bold tracking-widest text-blue-400 mb-1">
+                  Campaign Focus
                 </div>
+                <h3 className="text-lg font-bold font-editorial leading-snug">
+                  The Art of Everyday Balance
+                </h3>
+                <p className="text-xs text-stone-300 mt-1 line-clamp-1">
+                  Objects engineered for quiet luxury, tactile presence, and lasting longevity.
+                </p>
               </div>
             </div>
 
-            {/* Floating Glass Pill Left */}
+            {/* Overlapping Floating Product Card (Asymmetric Layer) */}
             <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
-              className="hidden sm:flex absolute -bottom-6 -left-8 p-3 rounded-2xl glass-panel bg-[#0d1124]/95 border border-cyan-500/30 shadow-xl items-center gap-3 backdrop-blur-xl"
+              initial={{ opacity: 0, x: -20, y: 20 }}
+              animate={{ opacity: 1, x: 0, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.35 }}
+              className="absolute -bottom-6 -left-6 sm:-left-10 bg-white dark:bg-[#181a24] p-3.5 rounded-2xl border border-[#e7e2d9] dark:border-white/15 shadow-xl max-w-[260px] z-20 hidden sm:flex items-center gap-3.5"
             >
-              <div className="w-9 h-9 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center">
-                <Zap className="w-5 h-5" />
+              <img
+                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=300&auto=format&fit=crop"
+                alt="SpherePulse Pro ANC"
+                className="w-14 h-14 rounded-xl object-cover bg-stone-100 shrink-0"
+              />
+              <div className="min-w-0">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+                  Top Release
+                </div>
+                <h4 className="text-xs font-bold text-stone-900 dark:text-white truncate">
+                  SpherePulse Pro ANC
+                </h4>
+                <div className="text-xs font-extrabold text-stone-900 dark:text-white mt-0.5">
+                  $349 <span className="text-[10px] text-stone-400 font-normal line-through">$399</span>
+                </div>
               </div>
-              <div>
-                <div className="text-xs font-bold text-white">Lossless LDAC Audio</div>
-                <div className="text-[10px] text-slate-400">45-Hour Battery Life</div>
-              </div>
+              <Link
+                to="/products/sp-audio-01"
+                className="p-1.5 rounded-lg bg-stone-100 dark:bg-white/10 hover:bg-stone-200 text-stone-700 dark:text-white shrink-0 ml-auto"
+                aria-label="View product"
+              >
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </Link>
             </motion.div>
 
-            {/* Floating Glass Pill Right */}
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut' }}
-              className="hidden sm:flex absolute -top-6 -right-6 p-3 rounded-2xl glass-panel bg-[#0d1124]/95 border border-violet-500/30 shadow-xl items-center gap-3 backdrop-blur-xl"
-            >
-              <div className="w-9 h-9 rounded-xl bg-violet-500/20 text-violet-400 flex items-center justify-center">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <div>
-                <div className="text-xs font-bold text-white">Grade 5 Titanium</div>
-                <div className="text-[10px] text-slate-400">Micro-Billet Chassis</div>
-              </div>
-            </motion.div>
+            {/* Top Right Floating Pill */}
+            <div className="absolute -top-3 -right-3 hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-[#181a24] border border-[#e7e2d9] dark:border-white/15 shadow-md text-xs font-semibold text-stone-800 dark:text-stone-200 z-20">
+              <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+              <span>Complimentary Global Delivery</span>
+            </div>
           </motion.div>
+
         </div>
       </div>
     </section>

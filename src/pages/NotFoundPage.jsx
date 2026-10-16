@@ -1,36 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Compass, ArrowRight, Home, Sparkles } from 'lucide-react';
+import { Compass, ArrowRight, Home } from 'lucide-react';
 import { Button } from '../components/common/Button';
 
 export function NotFoundPage() {
   return (
-    <div className="py-20 sm:py-32 max-w-4xl mx-auto px-4 text-center">
+    <div className="py-20 sm:py-32 max-w-4xl mx-auto px-4 text-center bg-[#faf9f5] dark:bg-[#0c0d11] text-[#121316] dark:text-[#f3efe6]">
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
+        initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="relative rounded-3xl glass-panel bg-slate-900/60 border border-white/10 p-8 sm:p-16 shadow-2xl overflow-hidden"
+        className="relative rounded-3xl bg-white dark:bg-[#12141c] border border-[#e7e2d9] dark:border-white/10 p-8 sm:p-16 shadow-lg overflow-hidden"
       >
-        {/* Glow Orb */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-tr from-cyan-500/20 to-violet-600/20 blur-[90px] rounded-full pointer-events-none" />
-
         <div className="relative z-10">
-          <div className="w-20 h-20 rounded-3xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center mx-auto mb-6 shadow-xl shadow-cyan-500/15">
-            <Compass className="w-10 h-10 animate-spin-slow" />
+          <div className="w-20 h-20 rounded-3xl bg-stone-100 dark:bg-white/5 border border-[#e7e2d9] dark:border-white/10 text-stone-900 dark:text-white flex items-center justify-center mx-auto mb-6 shadow-xs">
+            <Compass className="w-10 h-10 text-blue-600 dark:text-blue-400" />
           </div>
 
-          <div className="text-7xl sm:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-500 to-violet-500 font-display">
+          <div className="text-7xl sm:text-9xl font-bold font-editorial text-stone-900 dark:text-white tracking-tighter">
             404
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-white font-display mt-2">
-            Orbit Coordinate Lost
+          <h1 className="text-2xl sm:text-4xl font-bold font-editorial text-stone-900 dark:text-white mt-2">
+            Page Not Found
           </h1>
 
-          <p className="text-sm text-slate-300 max-w-md mx-auto mt-3 leading-relaxed">
-            The page, collection, or instrument you are seeking has either shifted orbital coordinates or does not exist.
+          <p className="text-sm text-stone-600 dark:text-stone-400 max-w-md mx-auto mt-3 leading-relaxed font-normal">
+            The collection, category, or object you are seeking may have moved or does not exist in our catalog.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -39,9 +36,9 @@ export function NotFoundPage() {
                 variant="primary"
                 size="md"
                 icon={Home}
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto shadow-md"
               >
-                Back to Command (Home)
+                Return to Storefront
               </Button>
             </Link>
 
@@ -53,7 +50,7 @@ export function NotFoundPage() {
                 iconPosition="right"
                 className="w-full sm:w-auto"
               >
-                Browse All Products
+                Browse All 48 Products
               </Button>
             </Link>
           </div>

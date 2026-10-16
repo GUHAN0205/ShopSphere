@@ -9,18 +9,32 @@ export function CatalogPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
-  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('cat') || 'all');
+  const [selectedCategory, setSelectedCategory] = useState(
+    searchParams.get('cat') || searchParams.get('category') || 'all'
+  );
   const [priceRange, setPriceRange] = useState(2000);
-  const [minRating, setMinRating] = useState(0);
-  const [sortBy, setSortBy] = useState('featured');
+  const [minRating, setMinRating] = useState(
+    searchParams.get('filter') === 'bestsellers' ? 4.7 : 0
+  );
+  const [sortBy, setSortBy] = useState(
+    searchParams.get('filter') === 'new' ? 'newest' : 'featured'
+  );
   const [inStockOnly, setInStockOnly] = useState(false);
 
   // Sync search params if present
   useEffect(() => {
     const q = searchParams.get('q');
     if (q !== null) setSearchQuery(q);
-    const cat = searchParams.get('cat');
+
+    const cat = searchParams.get('cat') || searchParams.get('category');
     if (cat !== null) setSelectedCategory(cat);
+
+    const filter = searchParams.get('filter');
+    if (filter === 'new') {
+      setSortBy('newest');
+    } else if (filter === 'bestsellers') {
+      setMinRating(4.7);
+    }
   }, [searchParams]);
 
   const handleResetFilters = () => {
@@ -41,7 +55,7 @@ export function CatalogPage() {
         const matchesName = prod.name.toLowerCase().includes(q);
         const matchesDesc = prod.shortDesc.toLowerCase().includes(q);
         const matchesCategory = prod.category.toLowerCase().includes(q);
-        const matchesTag = prod.tags.some(t => t.toLowerCase().includes(q));
+        const matchesTag = prod.tags?.some(t => t.toLowerCase().includes(q));
         if (!matchesName && !matchesDesc && !matchesCategory && !matchesTag) {
           return false;
         }
@@ -78,18 +92,18 @@ export function CatalogPage() {
   }, [searchQuery, selectedCategory, priceRange, minRating, sortBy, inStockOnly]);
 
   return (
-    <div className="py-6 sm:py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <Breadcrumbs items={[{ label: 'Product Catalog' }]} />
+    <div className="py-6 sm:py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#faf9f5] dark:bg-[#0c0d11] text-[#121316] dark:text-[#f3efe6]">
+      <Breadcrumbs items={[{ label: 'Catalog Index' }]} />
 
       <div className="mt-4 mb-8">
-        <span className="text-xs font-bold uppercase tracking-widest text-cyan-400">
-          Curated Archive
+        <span className="text-xs font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400">
+          The Complete Archive
         </span>
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-white mt-1 font-display">
-          All Products & Drops
+        <h1 className="text-3xl sm:text-5xl font-bold font-editorial text-stone-900 dark:text-white mt-1 tracking-tight">
+          Curated Catalog
         </h1>
-        <p className="text-sm text-slate-400 mt-2 max-w-2xl">
-          Browse our entire catalog of spatial audio hardware, Grade 5 titanium horology, weather-sealed apparel, and kinetic lighting.
+        <p className="text-sm sm:text-base text-stone-600 dark:text-stone-400 mt-2 max-w-2xl font-normal">
+          Explore all 48 catalog objects organized across audio instruments, precision horology, technical apparel, ceramics, and daily essentials.
         </p>
       </div>
 

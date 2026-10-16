@@ -3,40 +3,88 @@ export const CATEGORIES = [
     id: 'electronics',
     name: 'Electronics',
     slug: 'electronics',
-    description: 'Next-gen audio, computing, and intelligent personal devices engineered for the future.',
-    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1000&auto=format&fit=crop',
+    shortName: 'Electronics',
+    description: 'Workstation displays, mechanical keyboards, and precision creator equipment.',
+    image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?q=80&w=1000&auto=format&fit=crop',
     itemCount: 8,
-    accent: 'cyan',
-    badge: 'Trending Tech'
+    tag: 'Creator Tech',
+    accentColor: '#1d4ed8'
+  },
+  {
+    id: 'audio',
+    name: 'Audio & Headphones',
+    slug: 'audio',
+    shortName: 'Audio',
+    description: 'Reference-grade monitors, spatial ANC headphones, and architectural soundbars.',
+    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1000&auto=format&fit=crop',
+    itemCount: 6,
+    tag: 'Hi-Fi Sound',
+    accentColor: '#ea580c'
   },
   {
     id: 'fashion',
-    name: 'Avant Fashion',
+    name: 'Fashion & Outerwear',
     slug: 'fashion',
-    description: 'Architectural silhouettes, technical fabrics, and modern cyber-minimalist aesthetics.',
-    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1000&auto=format&fit=crop',
+    shortName: 'Fashion',
+    description: 'Architectural trench coats, technical merino layers, and structured minimal apparel.',
+    image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1000&auto=format&fit=crop',
     itemCount: 6,
-    accent: 'violet',
-    badge: 'Fall / Winter 2026'
+    tag: 'Apparel Edit',
+    accentColor: '#4d7c0f'
   },
   {
-    id: 'accessories',
-    name: 'Precision Accessories',
-    slug: 'accessories',
-    description: 'Aerospace-grade titanium chronographs, biometric carriers, and optical lenses.',
+    id: 'footwear',
+    name: 'Sneakers & Footwear',
+    slug: 'footwear',
+    shortName: 'Footwear',
+    description: 'Carbon propulsion runners, minimalist calfskin low-tops, and waterproof desert boots.',
+    image: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=1000&auto=format&fit=crop',
+    itemCount: 6,
+    tag: 'Footwear Lab',
+    accentColor: '#1d4ed8'
+  },
+  {
+    id: 'watches',
+    name: 'Watches & Accessories',
+    slug: 'watches',
+    shortName: 'Horology',
+    description: 'Titanium chronographs, sapphire automatics, polarized optical wireframes, and minimalist wallets.',
     image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1000&auto=format&fit=crop',
-    itemCount: 5,
-    accent: 'cyan',
-    badge: 'Ultra Craft'
+    itemCount: 6,
+    tag: 'Fine Metal',
+    accentColor: '#ea580c'
   },
   {
     id: 'home-living',
-    name: 'Living & Habitat',
+    name: 'Home & Living',
     slug: 'home-living',
-    description: 'Sculptural ambient lighting, acoustic tranquility objects, and intelligent ergonomic living.',
+    shortName: 'Living',
+    description: 'Sculptural levitating lamps, ergonomic task seating, stone diffusers, and tactile vessels.',
     image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=1000&auto=format&fit=crop',
-    itemCount: 5,
-    accent: 'violet',
-    badge: 'Spatial Living'
+    itemCount: 6,
+    tag: 'Sanctuary',
+    accentColor: '#4d7c0f'
+  },
+  {
+    id: 'bags-travel',
+    name: 'Bags & Travel',
+    slug: 'bags-travel',
+    shortName: 'Travel',
+    description: 'Ballistic EDC backpacks, structured canvas holdalls, and biometric carry-on rollers.',
+    image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=1000&auto=format&fit=crop',
+    itemCount: 6,
+    tag: 'Transit',
+    accentColor: '#1d4ed8'
+  },
+  {
+    id: 'lifestyle',
+    name: 'Lifestyle & Everyday',
+    slug: 'lifestyle',
+    shortName: 'Lifestyle',
+    description: 'Precision thermal vessels, brass desk tools, ultrasonic wellness objects, and notebooks.',
+    image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1000&auto=format&fit=crop',
+    itemCount: 6,
+    tag: 'Everyday Ritual',
+    accentColor: '#ea580c'
   }
 ];

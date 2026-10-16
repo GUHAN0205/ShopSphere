@@ -39,39 +39,39 @@ export function CartSummary() {
   };
 
   return (
-    <div className="rounded-3xl glass-panel bg-slate-900/70 border border-white/10 p-6 sm:p-8 space-y-6 shadow-2xl">
-      <h3 className="text-xl font-bold text-white font-display">
+    <div className="rounded-3xl bg-white dark:bg-[#12141c] border border-[#e7e2d9] dark:border-white/10 p-6 sm:p-8 space-y-6 shadow-md">
+      <h3 className="text-xl font-bold font-editorial text-stone-900 dark:text-white">
         Order Summary
       </h3>
 
       {/* Free Shipping Progress Indicator */}
-      <div className="p-4 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 space-y-2">
+      <div className="p-4 rounded-2xl bg-stone-50 dark:bg-white/5 border border-[#e7e2d9] dark:border-white/10 space-y-2">
         <div className="flex items-center justify-between text-xs">
-          <span className="font-semibold text-cyan-300 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+          <span className="font-semibold text-stone-800 dark:text-stone-200 flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
             {amountToFreeShipping > 0
               ? `Add ${formatPrice(amountToFreeShipping)} more for complimentary shipping`
-              : 'You unlocked complimentary Express Shipping!'}
+              : 'You unlocked complimentary Express Courier!'}
           </span>
-          <span className="font-mono text-cyan-400 font-bold">{progressPercent}%</span>
+          <span className="font-mono text-stone-900 dark:text-white font-bold">{progressPercent}%</span>
         </div>
-        <div className="w-full h-2 rounded-full bg-slate-950 overflow-hidden">
+        <div className="w-full h-2 rounded-full bg-stone-200 dark:bg-stone-800 overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-cyan-400 to-indigo-500 rounded-full transition-all duration-500"
+            className="h-full bg-blue-600 dark:bg-blue-400 rounded-full transition-all duration-500"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
       </div>
 
       {/* Line Item Breakdown */}
-      <div className="space-y-3 text-sm border-b border-white/10 pb-6">
-        <div className="flex justify-between text-slate-300">
+      <div className="space-y-3 text-sm border-b border-[#e7e2d9] dark:border-white/10 pb-6">
+        <div className="flex justify-between text-stone-600 dark:text-stone-300">
           <span>Subtotal</span>
-          <span className="font-semibold text-white">{formatPrice(subtotal)}</span>
+          <span className="font-semibold text-stone-900 dark:text-white">{formatPrice(subtotal)}</span>
         </div>
 
         {discountAmount > 0 && (
-          <div className="flex justify-between text-cyan-400 font-medium">
+          <div className="flex justify-between text-orange-600 dark:text-orange-400 font-semibold">
             <span className="flex items-center gap-1">
               <Tag className="w-3.5 h-3.5" />
               <span>Discount ({appliedPromo?.description || 'Promo'})</span>
@@ -80,119 +80,96 @@ export function CartSummary() {
           </div>
         )}
 
-        <div className="flex justify-between text-slate-300">
+        <div className="flex justify-between text-stone-600 dark:text-stone-300">
           <span>Estimated Shipping</span>
-          <span className="font-semibold text-white">
+          <span className="font-semibold text-stone-900 dark:text-white">
             {shippingCharge === 0 ? (
-              <span className="text-emerald-400 font-bold uppercase text-xs">FREE</span>
+              <span className="text-emerald-600 dark:text-emerald-400 font-bold uppercase text-xs">FREE</span>
             ) : (
               formatPrice(shippingCharge)
             )}
           </span>
         </div>
 
-        <div className="flex justify-between text-slate-300">
+        <div className="flex justify-between text-stone-600 dark:text-stone-300">
           <span>Estimated Sales Tax (8%)</span>
-          <span className="font-semibold text-white">{formatPrice(taxAmount)}</span>
+          <span className="font-semibold text-stone-900 dark:text-white">{formatPrice(taxAmount)}</span>
         </div>
       </div>
 
       {/* Promo Code Input */}
       <div>
-        <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
-          Promotional Voucher
-        </label>
-        {appliedPromo ? (
-          <div className="flex items-center justify-between p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-cyan-400" />
-              <span>
-                <strong>{appliedPromo.code}</strong> — {appliedPromo.description}
-              </span>
-            </div>
-            <button
-              onClick={removePromoCode}
-              className="text-slate-400 hover:text-white p-1"
-              title="Remove promo"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-        ) : (
-          <form onSubmit={handleApplyPromo} className="flex gap-2">
+        <form onSubmit={handleApplyPromo} className="flex gap-2">
+          <div className="relative flex-1">
             <input
               type="text"
               value={promoInput}
-              onChange={(e) => {
-                setPromoInput(e.target.value);
-                setPromoError('');
-              }}
-              placeholder="e.g. BEYOND20"
-              className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 uppercase font-mono"
+              onChange={(e) => setPromoInput(e.target.value.toUpperCase())}
+              placeholder="Voucher code (e.g. BEYOND20)"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-stone-50 dark:bg-stone-900 border border-[#e7e2d9] dark:border-white/15 text-stone-900 dark:text-white placeholder-stone-400 text-xs font-mono uppercase focus:outline-none focus:border-stone-500"
             />
-            <Button
-              type="submit"
-              variant="secondary"
-              size="sm"
-            >
-              Apply
-            </Button>
-          </form>
-        )}
-        {promoError && (
-          <p className="text-xs text-rose-400 mt-1.5">{promoError}</p>
-        )}
-        <p className="text-[11px] text-slate-500 mt-1.5">
-          Try <code className="text-cyan-400">BEYOND20</code> (20% off) or <code className="text-cyan-400">FREESHIP</code>
-        </p>
-      </div>
-
-      {/* Final Total */}
-      <div className="pt-2 border-t border-white/10">
-        <div className="flex justify-between items-baseline mb-6">
-          <span className="text-base font-bold text-white">Estimated Total</span>
-          <div className="text-right">
-            <span className="text-3xl font-extrabold text-white font-display">
-              {formatPrice(total)}
-            </span>
-            <span className="block text-[10px] text-slate-400">USD, inclusive of duties</span>
           </div>
-        </div>
-
-        {/* Checkout CTA */}
-        <Button
-          variant="primary"
-          size="lg"
-          className="w-full glow-cyan"
-          icon={ArrowRight}
-          iconPosition="right"
-          disabled={cart.length === 0}
-          onClick={() => navigate('/checkout')}
-        >
-          Proceed to Checkout
-        </Button>
-
-        <div className="mt-4 text-center">
-          <Link
-            to="/products"
-            className="text-xs text-slate-400 hover:text-cyan-400 transition-colors"
+          <button
+            type="submit"
+            className="px-4 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 dark:bg-white/10 dark:hover:bg-white/15 text-xs font-bold text-stone-900 dark:text-white transition-colors cursor-pointer"
           >
-            ← Continue Browsing Collection
-          </Link>
+            Apply
+          </button>
+        </form>
+
+        {promoError && (
+          <p className="text-xs text-rose-500 mt-1.5">{promoError}</p>
+        )}
+
+        {appliedPromo && (
+          <div className="mt-2 flex items-center justify-between p-2 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-xs text-emerald-800 dark:text-emerald-300">
+            <span className="flex items-center gap-1.5 font-mono font-bold">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              {appliedPromo.code} applied
+            </span>
+            <button
+              onClick={removePromoCode}
+              className="text-stone-400 hover:text-stone-700 dark:hover:text-white p-1"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
+
+        {/* Suggestion hint */}
+        <div className="text-[11px] text-stone-400 mt-2">
+          Available codes: <span className="font-mono text-stone-700 dark:text-stone-300 font-bold">BEYOND20</span> (20% off), <span className="font-mono text-stone-700 dark:text-stone-300 font-bold">FREESHIP</span>
         </div>
       </div>
+
+      {/* Total Section */}
+      <div className="pt-4 border-t border-[#e7e2d9] dark:border-white/10 flex items-baseline justify-between">
+        <div>
+          <span className="text-xs uppercase font-bold tracking-wider text-stone-500 dark:text-stone-400">Total Due</span>
+          <div className="text-xs text-stone-400">Including tax & logistics</div>
+        </div>
+        <div className="text-3xl font-bold font-editorial text-stone-900 dark:text-white">
+          {formatPrice(total)}
+        </div>
+      </div>
+
+      {/* Proceed to Checkout CTA */}
+      <Button
+        variant="primary"
+        size="lg"
+        className="w-full shadow-md"
+        icon={ArrowRight}
+        iconPosition="right"
+        disabled={cart.length === 0}
+        onClick={() => navigate('/checkout')}
+      >
+        Proceed to Express Checkout
+      </Button>
 
       {/* Security note */}
-      <div className="pt-4 border-t border-white/5 flex items-center justify-center gap-3 text-xs text-slate-400">
-        <span className="flex items-center gap-1">
-          <Lock className="w-3.5 h-3.5 text-cyan-400" />
-          <span>256-Bit SSL Encrypted</span>
-        </span>
-        <span>•</span>
-        <span className="flex items-center gap-1">
-          <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-          <span>30-Day Guarantee</span>
-        </span>
+      <div className="flex items-center justify-center gap-2 text-xs text-stone-500">
+        <Lock className="w-3.5 h-3.5 text-stone-400" />
+        <span>End-to-End Encrypted Simulation • Demo Sandbox</span>
       </div>
     </div>
   );

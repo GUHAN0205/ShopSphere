@@ -12,7 +12,8 @@ export function NewsletterSection() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email || !email.includes('@') || !email.includes('.')) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
       toastError('Invalid Email Address', 'Please provide a valid email format.');
       return;
     }
@@ -21,46 +22,43 @@ export function NewsletterSection() {
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubscribed(true);
-      toastSuccess('Subscribed to The Dispatch', 'Welcome to the inner circle of ShopSphere releases.');
+      toastSuccess('Subscribed to The Gazette', 'Welcome to the ShopSphere editorial digest.');
       setEmail('');
-    }, 800);
+    }, 600);
   };
 
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden">
+    <section className="py-16 md:py-24 relative overflow-hidden bg-[#faf9f5] dark:bg-[#0c0d11]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative rounded-3xl glass-panel bg-gradient-to-b from-slate-900/90 to-[#0d1124] border border-white/10 p-8 sm:p-12 md:p-16 text-center max-w-4xl mx-auto shadow-2xl"
+          className="relative rounded-3xl bg-[#f2efe7] dark:bg-[#141620] border border-[#e7e2d9] dark:border-white/10 p-8 sm:p-12 md:p-16 text-center max-w-4xl mx-auto shadow-sm"
         >
-          {/* Subtle Ambient Light */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-cyan-500/10 blur-[80px] rounded-full pointer-events-none" />
-
           <div className="relative z-10 max-w-xl mx-auto">
-            <div className="w-12 h-12 rounded-2xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-400 flex items-center justify-center mx-auto mb-5 shadow-lg shadow-cyan-500/15">
-              <Mail className="w-6 h-6" />
+            <div className="w-12 h-12 rounded-2xl bg-white dark:bg-white/5 border border-[#e7e2d9] dark:border-white/10 text-stone-900 dark:text-white flex items-center justify-center mx-auto mb-4 shadow-xs">
+              <Mail className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             </div>
 
-            <span className="text-xs font-bold uppercase tracking-widest text-cyan-400">
-              Private Dispatch
+            <span className="text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-400">
+              The Weekly Edit
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-1 font-display">
-              Join The ShopSphere Circle
+            <h2 className="text-3xl sm:text-4xl font-bold font-editorial text-stone-900 dark:text-white mt-1">
+              Join The ShopSphere Dispatch
             </h2>
-            <p className="text-sm text-slate-300 mt-3 leading-relaxed">
-              Receive confidential notifications for limited mechanical drops, architectural collaborations, and private member seasonal pricing.
+            <p className="text-sm text-stone-600 dark:text-stone-300 mt-2.5 leading-relaxed font-sans font-normal">
+              Curated notes on industrial design, private previews of seasonal arrivals, and member-exclusive discount codes delivered weekly.
             </p>
 
             {isSubscribed ? (
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="mt-8 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 flex items-center justify-center gap-2 text-sm font-semibold"
+                className="mt-8 p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-300 dark:border-emerald-500/30 text-emerald-800 dark:text-emerald-300 flex items-center justify-center gap-2 text-sm font-semibold"
               >
-                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                <span>You have been registered for future private release alerts.</span>
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <span>You have been added to the editorial dispatch list.</span>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="mt-8 flex flex-col sm:flex-row gap-2.5 max-w-md mx-auto">
@@ -68,8 +66,8 @@ export function NewsletterSection() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email address..."
-                  className="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-cyan-400 transition-colors"
+                  placeholder="name@domain.com"
+                  className="flex-1 px-4 py-3 rounded-xl bg-white dark:bg-black/30 border border-[#e7e2d9] dark:border-white/15 text-stone-900 dark:text-white placeholder-stone-400 text-sm focus:outline-none focus:border-stone-500 transition-colors shadow-xs"
                 />
                 <Button
                   type="submit"
@@ -84,9 +82,13 @@ export function NewsletterSection() {
               </form>
             )}
 
-            <div className="mt-4 flex items-center justify-center gap-2 text-[11px] text-slate-500">
-              <Shield className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Zero spam policy. Strict cryptographic privacy adherence. Unsubscribe anytime.</span>
+            <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-2 text-[11px] text-stone-500 dark:text-stone-400">
+              <span className="flex items-center gap-1.5">
+                <Shield className="w-3.5 h-3.5 text-stone-400" />
+                <span>No spam. Unsubscribe with a single click anytime.</span>
+              </span>
+              <span className="hidden sm:inline">•</span>
+              <span className="italic text-stone-400">Demo Simulation Notice: Local frontend demo without external mailers.</span>
             </div>
           </div>
         </motion.div>

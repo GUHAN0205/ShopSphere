@@ -5,12 +5,14 @@ import { PRODUCTS } from '../data/products';
 import { ProductGrid } from '../components/products/ProductGrid';
 import { Breadcrumbs } from '../components/common/Breadcrumbs';
 import { Button } from '../components/common/Button';
-import { Sparkles, ArrowLeft, SlidersHorizontal } from 'lucide-react';
+import { Sparkles, ArrowLeft } from 'lucide-react';
 
 export function CategoryPage() {
   const { category: categorySlug } = useParams();
 
-  const currentCategory = CATEGORIES.find(c => c.slug === categorySlug);
+  const currentCategory = CATEGORIES.find(
+    c => c.slug === categorySlug || c.id === categorySlug
+  );
 
   const [sortBy, setSortBy] = useState('featured');
   const [inStockOnly, setInStockOnly] = useState(false);
@@ -18,7 +20,9 @@ export function CategoryPage() {
   const categoryProducts = useMemo(() => {
     if (!currentCategory) return [];
     return PRODUCTS.filter(p => {
-      if (p.category !== currentCategory.id) return false;
+      const matchesCategory =
+        p.category === currentCategory.id || p.category === currentCategory.slug;
+      if (!matchesCategory) return false;
       if (inStockOnly && !p.inStock) return false;
       return true;
     }).sort((a, b) => {
@@ -31,10 +35,12 @@ export function CategoryPage() {
 
   if (!currentCategory) {
     return (
-      <div className="py-20 text-center max-w-xl mx-auto px-4">
-        <h2 className="text-2xl font-bold text-white mb-3">Sector Not Found</h2>
-        <p className="text-sm text-slate-400 mb-6">
-          The requested category "{categorySlug}" is not part of the active ShopSphere catalog.
+      <div className="py-24 text-center max-w-xl mx-auto px-4 bg-[#faf9f5] dark:bg-[#0c0d11] text-[#121316] dark:text-[#f3efe6]">
+        <h2 className="text-3xl font-bold font-editorial text-stone-900 dark:text-white mb-3">
+          Category Not Found
+        </h2>
+        <p className="text-sm text-stone-600 dark:text-stone-400 mb-6">
+          The requested category "{categorySlug}" is not part of the active ShopSphere 2.0 catalog.
         </p>
         <Link to="/products">
           <Button variant="primary" icon={ArrowLeft}>
@@ -46,71 +52,77 @@ export function CategoryPage() {
   }
 
   return (
-    <div className="py-6 sm:py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-6 sm:py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#faf9f5] dark:bg-[#0c0d11] text-[#121316] dark:text-[#f3efe6]">
       <Breadcrumbs
         items={[
-          { label: 'Categories', href: '/products' },
+          { label: 'Catalog', href: '/products' },
           { label: currentCategory.name }
         ]}
       />
 
       {/* Hero Category Banner */}
-      <div className="relative rounded-3xl overflow-hidden glass-card bg-slate-900 border border-white/10 my-6 p-8 sm:p-12 md:p-16 shadow-2xl">
+      <div className="relative rounded-3xl overflow-hidden bg-[#121316] text-white my-6 p-8 sm:p-12 md:p-14 shadow-xl">
         <img
           src={currentCategory.image}
           alt={currentCategory.name}
-          className="absolute inset-0 w-full h-full object-cover opacity-25"
+          className="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-luminosity"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#070913] via-[#070913]/90 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#121316] via-[#121316]/85 to-transparent" />
 
         <div className="relative z-10 max-w-2xl space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 text-xs font-bold">
-            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-            <span>{currentCategory.badge}</span>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold uppercase tracking-wider backdrop-blur-md">
+            <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+            <span>{currentCategory.badge || 'Curated Department'}</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-white font-display">
+          <h1 className="text-3xl sm:text-5xl font-bold font-editorial text-white tracking-tight">
             {currentCategory.name}
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+          <p className="text-sm sm:text-base text-stone-300 leading-relaxed font-normal">
             {currentCategory.description}
           </p>
 
-          <div className="pt-2 text-xs text-cyan-400 font-mono font-semibold">
-            {categoryProducts.length} Available Releases in Sector
+          <div className="pt-2 text-xs text-blue-400 font-mono font-semibold">
+            {categoryProducts.length} Objects Available in Discipline
           </div>
         </div>
       </div>
 
       {/* Controls Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-8 p-4 rounded-2xl glass-panel bg-slate-900/60 border border-white/10">
-        <div className="flex items-center gap-2 text-xs text-slate-400">
-          <span>Sort By:</span>
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-8 p-4 rounded-2xl bg-white dark:bg-[#12141c] border border-[#e7e2d9] dark:border-white/10 shadow-xs">
+        <div className="flex items-center gap-2 text-xs text-stone-600 dark:text-stone-400">
+          <span className="font-semibold">Sort By:</span>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="bg-slate-950 border border-white/10 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-cyan-400"
+            className="bg-[#faf9f5] dark:bg-[#181a26] border border-[#e7e2d9] dark:border-white/10 text-stone-900 dark:text-white text-xs font-medium rounded-xl px-3 py-2 focus:outline-none focus:border-stone-500 cursor-pointer"
           >
             <option value="featured">Featured Curations</option>
             <option value="price-asc">Price: Low to High</option>
             <option value="price-desc">Price: High to Low</option>
-            <option value="rating">Top Rated</option>
+            <option value="rating">Highest Rated</option>
           </select>
         </div>
 
-        <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer select-none">
-          <input
-            type="checkbox"
-            checked={inStockOnly}
-            onChange={(e) => setInStockOnly(e.target.checked)}
-            className="w-4 h-4 rounded accent-cyan-400 cursor-pointer"
-          />
-          <span>In-Stock Only</span>
-        </label>
+        <div className="flex items-center gap-4">
+          <label className="flex items-center gap-2 cursor-pointer select-none text-xs font-semibold text-stone-700 dark:text-stone-300">
+            <input
+              type="checkbox"
+              checked={inStockOnly}
+              onChange={(e) => setInStockOnly(e.target.checked)}
+              className="w-4 h-4 rounded accent-[#121316] dark:accent-white cursor-pointer"
+            />
+            <span>In Stock Only</span>
+          </label>
+
+          <span className="text-xs text-stone-600 dark:text-stone-400 bg-stone-100 dark:bg-white/5 px-2.5 py-1 rounded-md border border-stone-200 dark:border-white/10 font-mono font-bold">
+            {categoryProducts.length} Products
+          </span>
+        </div>
       </div>
 
-      {/* Category Products */}
+      {/* Products Grid */}
       <ProductGrid products={categoryProducts} />
     </div>
   );

@@ -14,7 +14,7 @@ export function CheckoutPage() {
   }
 
   return (
-    <div className="py-6 sm:py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-6 sm:py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#faf9f5] dark:bg-[#0c0d11] text-[#121316] dark:text-[#f3efe6]">
       <Breadcrumbs
         items={[
           { label: 'Shopping Bag', href: '/cart' },
@@ -22,15 +22,15 @@ export function CheckoutPage() {
         ]}
       />
 
-      <div className="mt-4 mb-8">
-        <span className="text-xs font-bold uppercase tracking-widest text-cyan-400">
-          Encrypted Gateway
+      <div className="mt-4 mb-8 pb-4 border-b border-[#e7e2d9] dark:border-white/10">
+        <span className="text-xs font-bold uppercase tracking-widest text-stone-500 dark:text-stone-400">
+          Simulated Settlement
         </span>
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-white font-display mt-1">
+        <h1 className="text-3xl sm:text-5xl font-bold font-editorial text-stone-900 dark:text-white mt-1">
           Express Checkout
         </h1>
-        <p className="text-xs text-slate-400 mt-1">
-          Complete your acquisition securely. All entries are encrypted with zero persistent card retention.
+        <p className="text-xs sm:text-sm text-stone-600 dark:text-stone-400 mt-1">
+          Complete your acquisition simulation. This is a frontend demo sandbox with no real payment charges.
         </p>
       </div>
 
@@ -42,12 +42,12 @@ export function CheckoutPage() {
 
         {/* Right Summary Sidebar */}
         <div className="lg:col-span-5 sticky top-28 space-y-6">
-          <div className="rounded-3xl glass-panel bg-slate-900/70 border border-white/10 p-6 sm:p-8 space-y-6 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <h3 className="text-lg font-bold text-white font-display">
+          <div className="rounded-3xl bg-white dark:bg-[#12141c] border border-[#e7e2d9] dark:border-white/10 p-6 sm:p-8 space-y-6 shadow-md">
+            <div className="flex items-center justify-between border-b border-[#e7e2d9] dark:border-white/10 pb-4">
+              <h3 className="text-lg font-bold font-editorial text-stone-900 dark:text-white">
                 Order Review ({cartCount} {cartCount === 1 ? 'item' : 'items'})
               </h3>
-              <Link to="/cart" className="text-xs text-cyan-400 hover:underline">
+              <Link to="/cart" className="text-xs text-blue-600 dark:text-blue-400 font-semibold hover:underline">
                 Edit Bag
               </Link>
             </div>
@@ -59,15 +59,15 @@ export function CheckoutPage() {
                   <img
                     src={item.images[0]}
                     alt={item.name}
-                    className="w-12 h-12 rounded-xl object-cover bg-slate-950 border border-white/10 shrink-0"
+                    className="w-12 h-12 rounded-xl object-cover bg-stone-100 dark:bg-stone-900 border border-[#e7e2d9]/60 dark:border-white/10 shrink-0"
                   />
                   <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-white truncate">{item.name}</div>
-                    <div className="text-slate-400 text-[11px]">
+                    <div className="font-semibold text-stone-900 dark:text-white truncate">{item.name}</div>
+                    <div className="text-stone-500 dark:text-stone-400 text-[11px]">
                       Qty: {item.quantity} • Finish: {item.selectedColor}
                     </div>
                   </div>
-                  <div className="font-bold text-white text-right">
+                  <div className="font-bold text-stone-900 dark:text-white text-right">
                     {formatPrice(item.price * item.quantity)}
                   </div>
                 </div>
@@ -75,54 +75,43 @@ export function CheckoutPage() {
             </div>
 
             {/* Calculations Breakdown */}
-            <div className="border-t border-white/10 pt-4 space-y-2 text-xs">
-              <div className="flex justify-between text-slate-300">
+            <div className="border-t border-[#e7e2d9] dark:border-white/10 pt-4 space-y-2 text-xs">
+              <div className="flex justify-between text-stone-600 dark:text-stone-300">
                 <span>Subtotal</span>
-                <span className="font-medium text-white">{formatPrice(subtotal)}</span>
+                <span className="font-semibold text-stone-900 dark:text-white">{formatPrice(subtotal)}</span>
               </div>
               {discountAmount > 0 && (
-                <div className="flex justify-between text-cyan-400">
+                <div className="flex justify-between text-orange-600 dark:text-orange-400 font-semibold">
                   <span>Promotional Savings</span>
                   <span>-{formatPrice(discountAmount)}</span>
                 </div>
               )}
-              <div className="flex justify-between text-slate-300">
+              <div className="flex justify-between text-stone-600 dark:text-stone-300">
                 <span>Courier Dispatch</span>
-                <span className="font-medium text-white">
+                <span className="font-semibold text-stone-900 dark:text-white">
                   {shippingCharge === 0 ? 'FREE' : formatPrice(shippingCharge)}
                 </span>
               </div>
-              <div className="flex justify-between text-slate-300">
+              <div className="flex justify-between text-stone-600 dark:text-stone-300">
                 <span>Estimated Tax (8%)</span>
-                <span className="font-medium text-white">{formatPrice(taxAmount)}</span>
+                <span className="font-semibold text-stone-900 dark:text-white">{formatPrice(taxAmount)}</span>
               </div>
             </div>
 
             {/* Total */}
-            <div className="border-t border-white/10 pt-4 flex justify-between items-baseline">
-              <span className="text-sm font-bold text-white">Total Amount Due</span>
-              <div className="text-right">
-                <span className="text-2xl font-black text-white font-display">
-                  {formatPrice(total)}
-                </span>
-                <span className="block text-[10px] text-slate-400">USD, inclusive of duties</span>
-              </div>
+            <div className="border-t border-[#e7e2d9] dark:border-white/10 pt-4 flex items-baseline justify-between">
+              <span className="text-xs uppercase font-bold text-stone-500 dark:text-stone-400">Total Settlement</span>
+              <span className="text-2xl font-bold font-editorial text-stone-900 dark:text-white">{formatPrice(total)}</span>
             </div>
 
-            {/* Trust Assurances */}
-            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2 text-[11px] text-slate-400">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0" />
-                <span>Zero-risk 30-day evaluation with free returns</span>
+            <div className="p-3.5 rounded-2xl bg-stone-100 dark:bg-white/5 border border-stone-200 dark:border-white/10 space-y-2 text-xs text-stone-600 dark:text-stone-400">
+              <div className="flex items-center gap-2 text-stone-800 dark:text-stone-200 font-semibold">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <span>Simulated Order Security</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Truck className="w-4 h-4 text-cyan-400 shrink-0" />
-                <span>Complimentary tracked shipping with impact telemetry</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Lock className="w-4 h-4 text-cyan-400 shrink-0" />
-                <span>Simulated sandbox mode — no live transaction occurs</span>
-              </div>
+              <p className="text-[11px] leading-relaxed">
+                This transaction processes simulated orders with local mock data. No real payment details are charged or transmitted.
+              </p>
             </div>
           </div>
         </div>

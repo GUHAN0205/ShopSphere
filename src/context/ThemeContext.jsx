@@ -5,10 +5,10 @@ const ThemeContext = createContext();
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
     try {
-      const saved = localStorage.getItem('shopsphere_theme');
-      return saved ? saved : 'dark';
+      const saved = localStorage.getItem('shopsphere_theme_v2') || localStorage.getItem('shopsphere_theme');
+      return saved ? saved : 'light';
     } catch {
-      return 'dark';
+      return 'light';
     }
   });
 

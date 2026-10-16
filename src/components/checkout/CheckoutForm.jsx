@@ -8,7 +8,7 @@ import { Button } from '../common/Button';
 
 export function CheckoutForm() {
   const { cart, subtotal, discountAmount, shippingCharge, taxAmount, total, clearCart } = useCart();
-  const { user, isAuthenticated } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState(() => {
@@ -124,23 +124,23 @@ export function CheckoutForm() {
       clearCart();
       setIsProcessing(false);
       navigate('/order-success', { state: { order: orderDetails } });
-    }, 1500);
+    }, 1200);
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Customer Contact Details */}
-      <div className="rounded-3xl glass-panel bg-slate-900/60 border border-white/10 p-6 sm:p-8 space-y-5 shadow-xl">
-        <h3 className="text-xl font-bold text-white flex items-center gap-2">
-          <span className="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-mono font-bold flex items-center justify-center border border-cyan-500/30">
+      <div className="rounded-3xl bg-white dark:bg-[#12141c] border border-[#e7e2d9] dark:border-white/10 p-6 sm:p-8 space-y-5 shadow-xs">
+        <h3 className="text-xl font-bold font-editorial text-stone-900 dark:text-white flex items-center gap-2">
+          <span className="w-7 h-7 rounded-full bg-stone-100 dark:bg-white/10 text-stone-900 dark:text-white text-xs font-mono font-bold flex items-center justify-center border border-[#e7e2d9] dark:border-white/15">
             1
           </span>
-          <span>Contact & Client Profile</span>
+          <span>Contact & Client Details</span>
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-1.5">
+            <label className="block text-xs font-semibold text-stone-600 dark:text-stone-400 mb-1.5">
               First Name *
             </label>
             <input
@@ -148,20 +148,20 @@ export function CheckoutForm() {
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
-              placeholder="Alex"
-              className={`w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border text-sm text-white focus:outline-none transition-colors ${
-                errors.firstName ? 'border-rose-500 focus:border-rose-400' : 'border-white/10 focus:border-cyan-400'
+              placeholder="Elena"
+              className={`w-full px-3.5 py-2.5 rounded-xl bg-stone-50 dark:bg-stone-900 border text-sm text-stone-900 dark:text-white focus:outline-none transition-colors ${
+                errors.firstName ? 'border-rose-500' : 'border-[#e7e2d9] dark:border-white/10 focus:border-stone-500'
               }`}
             />
             {errors.firstName && (
-              <span className="text-xs text-rose-400 mt-1 flex items-center gap-1">
+              <span className="text-xs text-rose-500 mt-1 flex items-center gap-1">
                 <AlertCircle className="w-3 h-3" /> {errors.firstName}
               </span>
             )}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-1.5">
+            <label className="block text-xs font-semibold text-stone-600 dark:text-stone-400 mb-1.5">
               Last Name *
             </label>
             <input
@@ -169,13 +169,13 @@ export function CheckoutForm() {
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
-              placeholder="Vance"
-              className={`w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border text-sm text-white focus:outline-none transition-colors ${
-                errors.lastName ? 'border-rose-500 focus:border-rose-400' : 'border-white/10 focus:border-cyan-400'
+              placeholder="Rostova"
+              className={`w-full px-3.5 py-2.5 rounded-xl bg-stone-50 dark:bg-stone-900 border text-sm text-stone-900 dark:text-white focus:outline-none transition-colors ${
+                errors.lastName ? 'border-rose-500' : 'border-[#e7e2d9] dark:border-white/10 focus:border-stone-500'
               }`}
             />
             {errors.lastName && (
-              <span className="text-xs text-rose-400 mt-1 flex items-center gap-1">
+              <span className="text-xs text-rose-500 mt-1 flex items-center gap-1">
                 <AlertCircle className="w-3 h-3" /> {errors.lastName}
               </span>
             )}
@@ -184,7 +184,7 @@ export function CheckoutForm() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-1.5">
+            <label className="block text-xs font-semibold text-stone-600 dark:text-stone-400 mb-1.5">
               Email Address *
             </label>
             <input
@@ -192,20 +192,20 @@ export function CheckoutForm() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="alex.vance@sphere.network"
-              className={`w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border text-sm text-white focus:outline-none transition-colors ${
-                errors.email ? 'border-rose-500 focus:border-rose-400' : 'border-white/10 focus:border-cyan-400'
+              placeholder="elena.rostova@atelier.design"
+              className={`w-full px-3.5 py-2.5 rounded-xl bg-stone-50 dark:bg-stone-900 border text-sm text-stone-900 dark:text-white focus:outline-none transition-colors ${
+                errors.email ? 'border-rose-500' : 'border-[#e7e2d9] dark:border-white/10 focus:border-stone-500'
               }`}
             />
             {errors.email && (
-              <span className="text-xs text-rose-400 mt-1 flex items-center gap-1">
+              <span className="text-xs text-rose-500 mt-1 flex items-center gap-1">
                 <AlertCircle className="w-3 h-3" /> {errors.email}
               </span>
             )}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-1.5">
+            <label className="block text-xs font-semibold text-stone-600 dark:text-stone-400 mb-1.5">
               Phone Number *
             </label>
             <input
@@ -214,12 +214,12 @@ export function CheckoutForm() {
               value={formData.phone}
               onChange={handleChange}
               placeholder="+1 (555) 019-2834"
-              className={`w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border text-sm text-white focus:outline-none transition-colors ${
-                errors.phone ? 'border-rose-500 focus:border-rose-400' : 'border-white/10 focus:border-cyan-400'
+              className={`w-full px-3.5 py-2.5 rounded-xl bg-stone-50 dark:bg-stone-900 border text-sm text-stone-900 dark:text-white focus:outline-none transition-colors ${
+                errors.phone ? 'border-rose-500' : 'border-[#e7e2d9] dark:border-white/10 focus:border-stone-500'
               }`}
             />
             {errors.phone && (
-              <span className="text-xs text-rose-400 mt-1 flex items-center gap-1">
+              <span className="text-xs text-rose-500 mt-1 flex items-center gap-1">
                 <AlertCircle className="w-3 h-3" /> {errors.phone}
               </span>
             )}
@@ -228,16 +228,16 @@ export function CheckoutForm() {
       </div>
 
       {/* Delivery Address */}
-      <div className="rounded-3xl glass-panel bg-slate-900/60 border border-white/10 p-6 sm:p-8 space-y-5 shadow-xl">
-        <h3 className="text-xl font-bold text-white flex items-center gap-2">
-          <span className="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-mono font-bold flex items-center justify-center border border-cyan-500/30">
+      <div className="rounded-3xl bg-white dark:bg-[#12141c] border border-[#e7e2d9] dark:border-white/10 p-6 sm:p-8 space-y-5 shadow-xs">
+        <h3 className="text-xl font-bold font-editorial text-stone-900 dark:text-white flex items-center gap-2">
+          <span className="w-7 h-7 rounded-full bg-stone-100 dark:bg-white/10 text-stone-900 dark:text-white text-xs font-mono font-bold flex items-center justify-center border border-[#e7e2d9] dark:border-white/15">
             2
           </span>
           <span>Delivery Destination</span>
         </h3>
 
         <div>
-          <label className="block text-xs font-semibold text-slate-400 mb-1.5">
+          <label className="block text-xs font-semibold text-stone-600 dark:text-stone-400 mb-1.5">
             Street Address *
           </label>
           <input
@@ -245,13 +245,13 @@ export function CheckoutForm() {
             name="address"
             value={formData.address}
             onChange={handleChange}
-            placeholder="742 Evergreen Terrace, Suite 400"
-            className={`w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border text-sm text-white focus:outline-none transition-colors ${
-              errors.address ? 'border-rose-500 focus:border-rose-400' : 'border-white/10 focus:border-cyan-400'
+            placeholder="128 Sullivan Street, Suite 4B"
+            className={`w-full px-3.5 py-2.5 rounded-xl bg-stone-50 dark:bg-stone-900 border text-sm text-stone-900 dark:text-white focus:outline-none transition-colors ${
+              errors.address ? 'border-rose-500' : 'border-[#e7e2d9] dark:border-white/10 focus:border-stone-500'
             }`}
           />
           {errors.address && (
-            <span className="text-xs text-rose-400 mt-1 flex items-center gap-1">
+            <span className="text-xs text-rose-500 mt-1 flex items-center gap-1">
               <AlertCircle className="w-3 h-3" /> {errors.address}
             </span>
           )}
@@ -259,7 +259,7 @@ export function CheckoutForm() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-1.5">
+            <label className="block text-xs font-semibold text-stone-600 dark:text-stone-400 mb-1.5">
               City *
             </label>
             <input
@@ -267,55 +267,55 @@ export function CheckoutForm() {
               name="city"
               value={formData.city}
               onChange={handleChange}
-              placeholder="San Francisco"
-              className={`w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border text-sm text-white focus:outline-none transition-colors ${
-                errors.city ? 'border-rose-500 focus:border-rose-400' : 'border-white/10 focus:border-cyan-400'
+              placeholder="New York"
+              className={`w-full px-3.5 py-2.5 rounded-xl bg-stone-50 dark:bg-stone-900 border text-sm text-stone-900 dark:text-white focus:outline-none transition-colors ${
+                errors.city ? 'border-rose-500' : 'border-[#e7e2d9] dark:border-white/10 focus:border-stone-500'
               }`}
             />
             {errors.city && (
-              <span className="text-xs text-rose-400 mt-1 flex items-center gap-1">
+              <span className="text-xs text-rose-500 mt-1 flex items-center gap-1">
                 <AlertCircle className="w-3 h-3" /> {errors.city}
               </span>
             )}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-1.5">
-              State / Province *
+            <label className="block text-xs font-semibold text-stone-600 dark:text-stone-400 mb-1.5">
+              State / Region *
             </label>
             <input
               type="text"
               name="state"
               value={formData.state}
               onChange={handleChange}
-              placeholder="California"
-              className={`w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border text-sm text-white focus:outline-none transition-colors ${
-                errors.state ? 'border-rose-500 focus:border-rose-400' : 'border-white/10 focus:border-cyan-400'
+              placeholder="NY"
+              className={`w-full px-3.5 py-2.5 rounded-xl bg-stone-50 dark:bg-stone-900 border text-sm text-stone-900 dark:text-white focus:outline-none transition-colors ${
+                errors.state ? 'border-rose-500' : 'border-[#e7e2d9] dark:border-white/10 focus:border-stone-500'
               }`}
             />
             {errors.state && (
-              <span className="text-xs text-rose-400 mt-1 flex items-center gap-1">
+              <span className="text-xs text-rose-500 mt-1 flex items-center gap-1">
                 <AlertCircle className="w-3 h-3" /> {errors.state}
               </span>
             )}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-1.5">
-              ZIP / Postal Code *
+            <label className="block text-xs font-semibold text-stone-600 dark:text-stone-400 mb-1.5">
+              Postal / ZIP Code *
             </label>
             <input
               type="text"
               name="postalCode"
               value={formData.postalCode}
               onChange={handleChange}
-              placeholder="94107"
-              className={`w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border text-sm text-white focus:outline-none transition-colors ${
-                errors.postalCode ? 'border-rose-500 focus:border-rose-400' : 'border-white/10 focus:border-cyan-400'
+              placeholder="10012"
+              className={`w-full px-3.5 py-2.5 rounded-xl bg-stone-50 dark:bg-stone-900 border text-sm text-stone-900 dark:text-white focus:outline-none transition-colors ${
+                errors.postalCode ? 'border-rose-500' : 'border-[#e7e2d9] dark:border-white/10 focus:border-stone-500'
               }`}
             />
             {errors.postalCode && (
-              <span className="text-xs text-rose-400 mt-1 flex items-center gap-1">
+              <span className="text-xs text-rose-500 mt-1 flex items-center gap-1">
                 <AlertCircle className="w-3 h-3" /> {errors.postalCode}
               </span>
             )}
@@ -324,16 +324,16 @@ export function CheckoutForm() {
       </div>
 
       {/* Payment Selection (Simulated) */}
-      <div className="rounded-3xl glass-panel bg-slate-900/60 border border-white/10 p-6 sm:p-8 space-y-5 shadow-xl">
+      <div className="rounded-3xl bg-white dark:bg-[#12141c] border border-[#e7e2d9] dark:border-white/10 p-6 sm:p-8 space-y-5 shadow-xs">
         <div className="flex items-center justify-between">
-          <h3 className="text-xl font-bold text-white flex items-center gap-2">
-            <span className="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-mono font-bold flex items-center justify-center border border-cyan-500/30">
+          <h3 className="text-xl font-bold font-editorial text-stone-900 dark:text-white flex items-center gap-2">
+            <span className="w-7 h-7 rounded-full bg-stone-100 dark:bg-white/10 text-stone-900 dark:text-white text-xs font-mono font-bold flex items-center justify-center border border-[#e7e2d9] dark:border-white/15">
               3
             </span>
-            <span>Payment Method (Simulated)</span>
+            <span>Simulated Payment Instrument</span>
           </h3>
-          <span className="text-xs text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 font-medium">
-            Demo Sandbox Environment
+          <span className="text-xs text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 px-2.5 py-1 rounded-full border border-blue-200 dark:border-blue-500/20 font-semibold">
+            Demo Sandbox
           </span>
         </div>
 
@@ -341,8 +341,8 @@ export function CheckoutForm() {
         <div className="grid grid-cols-3 gap-3">
           {[
             { id: 'card', label: 'Credit Card', icon: CreditCard },
-            { id: 'apple', label: 'Apple / Google Pay', icon: Smartphone },
-            { id: 'cod', label: 'Direct / Wire', icon: DollarSign }
+            { id: 'apple', label: 'Digital Pay', icon: Smartphone },
+            { id: 'cod', label: 'Bank Wire', icon: DollarSign }
           ].map(m => {
             const Icon = m.icon;
             return (
@@ -350,10 +350,10 @@ export function CheckoutForm() {
                 type="button"
                 key={m.id}
                 onClick={() => setFormData(prev => ({ ...prev, paymentMethod: m.id }))}
-                className={`p-3.5 rounded-2xl border text-center flex flex-col items-center gap-2 transition-all ${
+                className={`p-3.5 rounded-2xl border text-center flex flex-col items-center gap-2 transition-all cursor-pointer ${
                   formData.paymentMethod === m.id
-                    ? 'bg-cyan-500/15 border-cyan-400 text-cyan-300 shadow-md shadow-cyan-500/20'
-                    : 'bg-white/5 border-white/10 text-slate-400 hover:text-white hover:bg-white/10'
+                    ? 'bg-[#121316] text-white dark:bg-white dark:text-[#121316] border-[#121316] dark:border-white shadow-xs'
+                    : 'bg-stone-50 dark:bg-white/5 border-[#e7e2d9] dark:border-white/10 text-stone-600 dark:text-stone-400 hover:text-stone-900'
                 }`}
               >
                 <Icon className="w-5 h-5" />
@@ -364,9 +364,9 @@ export function CheckoutForm() {
         </div>
 
         {formData.paymentMethod === 'card' && (
-          <div className="p-5 rounded-2xl bg-slate-950/80 border border-white/10 space-y-4">
+          <div className="p-5 rounded-2xl bg-stone-50 dark:bg-stone-900/60 border border-[#e7e2d9] dark:border-white/10 space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-400 mb-1.5">
+              <label className="block text-xs font-semibold text-stone-600 dark:text-stone-400 mb-1.5">
                 Cardholder Name *
               </label>
               <input
@@ -374,39 +374,39 @@ export function CheckoutForm() {
                 name="cardName"
                 value={formData.cardName}
                 onChange={handleChange}
-                placeholder="Alex Vance"
-                className={`w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border text-sm text-white focus:outline-none ${
-                  errors.cardName ? 'border-rose-500' : 'border-white/10 focus:border-cyan-400'
+                placeholder="Elena Rostova"
+                className={`w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#12141c] border text-sm text-stone-900 dark:text-white focus:outline-none ${
+                  errors.cardName ? 'border-rose-500' : 'border-[#e7e2d9] dark:border-white/10 focus:border-stone-500'
                 }`}
               />
               {errors.cardName && (
-                <span className="text-xs text-rose-400 mt-1">{errors.cardName}</span>
+                <span className="text-xs text-rose-500 mt-1">{errors.cardName}</span>
               )}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-400 mb-1.5">
-                Card Number *
+              <label className="block text-xs font-semibold text-stone-600 dark:text-stone-400 mb-1.5">
+                Card Number (Simulated) *
               </label>
               <input
                 type="text"
                 name="cardNumber"
                 value={formData.cardNumber}
                 onChange={handleChange}
-                placeholder="4532 •••• •••• 8921"
+                placeholder="4000 1234 5678 9010"
                 maxLength="19"
-                className={`w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border text-sm text-white font-mono focus:outline-none ${
-                  errors.cardNumber ? 'border-rose-500' : 'border-white/10 focus:border-cyan-400'
+                className={`w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#12141c] border text-sm text-stone-900 dark:text-white font-mono focus:outline-none ${
+                  errors.cardNumber ? 'border-rose-500' : 'border-[#e7e2d9] dark:border-white/10 focus:border-stone-500'
                 }`}
               />
               {errors.cardNumber && (
-                <span className="text-xs text-rose-400 mt-1">{errors.cardNumber}</span>
+                <span className="text-xs text-rose-500 mt-1">{errors.cardNumber}</span>
               )}
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-400 mb-1.5">
+                <label className="block text-xs font-semibold text-stone-600 dark:text-stone-400 mb-1.5">
                   Expiry Date (MM/YY) *
                 </label>
                 <input
@@ -416,17 +416,17 @@ export function CheckoutForm() {
                   onChange={handleChange}
                   placeholder="08/29"
                   maxLength="5"
-                  className={`w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border text-sm text-white font-mono focus:outline-none ${
-                    errors.cardExpiry ? 'border-rose-500' : 'border-white/10 focus:border-cyan-400'
+                  className={`w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#12141c] border text-sm text-stone-900 dark:text-white font-mono focus:outline-none ${
+                    errors.cardExpiry ? 'border-rose-500' : 'border-[#e7e2d9] dark:border-white/10 focus:border-stone-500'
                   }`}
                 />
                 {errors.cardExpiry && (
-                  <span className="text-xs text-rose-400 mt-1">{errors.cardExpiry}</span>
+                  <span className="text-xs text-rose-500 mt-1">{errors.cardExpiry}</span>
                 )}
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-400 mb-1.5">
+                <label className="block text-xs font-semibold text-stone-600 dark:text-stone-400 mb-1.5">
                   Security CVC *
                 </label>
                 <input
@@ -436,12 +436,12 @@ export function CheckoutForm() {
                   onChange={handleChange}
                   placeholder="•••"
                   maxLength="4"
-                  className={`w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border text-sm text-white font-mono focus:outline-none ${
-                    errors.cardCvc ? 'border-rose-500' : 'border-white/10 focus:border-cyan-400'
+                  className={`w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#12141c] border text-sm text-stone-900 dark:text-white font-mono focus:outline-none ${
+                    errors.cardCvc ? 'border-rose-500' : 'border-[#e7e2d9] dark:border-white/10 focus:border-stone-500'
                   }`}
                 />
                 {errors.cardCvc && (
-                  <span className="text-xs text-rose-400 mt-1">{errors.cardCvc}</span>
+                  <span className="text-xs text-rose-500 mt-1">{errors.cardCvc}</span>
                 )}
               </div>
             </div>
@@ -449,21 +449,21 @@ export function CheckoutForm() {
         )}
 
         {formData.paymentMethod === 'apple' && (
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10 text-center space-y-2">
-            <Smartphone className="w-8 h-8 text-cyan-400 mx-auto" />
-            <h4 className="text-sm font-bold text-white">Express Biometric Authentication</h4>
-            <p className="text-xs text-slate-400 max-w-sm mx-auto">
-              Simulated Touch ID / Face ID payment confirmation will be authorized upon clicking Place Order.
+          <div className="p-6 rounded-2xl bg-stone-50 dark:bg-white/5 border border-[#e7e2d9] dark:border-white/10 text-center space-y-2">
+            <Smartphone className="w-8 h-8 text-blue-600 dark:text-blue-400 mx-auto" />
+            <h4 className="text-sm font-bold text-stone-900 dark:text-white">Biometric Pass Simulation</h4>
+            <p className="text-xs text-stone-500 dark:text-stone-400 max-w-sm mx-auto font-normal">
+              Biometric token simulation will be authorized instantly when you place your order.
             </p>
           </div>
         )}
 
         {formData.paymentMethod === 'cod' && (
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10 text-center space-y-2">
-            <DollarSign className="w-8 h-8 text-violet-400 mx-auto" />
-            <h4 className="text-sm font-bold text-white">Direct Commercial Wire / COD</h4>
-            <p className="text-xs text-slate-400 max-w-sm mx-auto">
-              Invoice and courier routing details will be generated with zero upfront charge simulation.
+          <div className="p-6 rounded-2xl bg-stone-50 dark:bg-white/5 border border-[#e7e2d9] dark:border-white/10 text-center space-y-2">
+            <DollarSign className="w-8 h-8 text-stone-700 dark:text-stone-300 mx-auto" />
+            <h4 className="text-sm font-bold text-stone-900 dark:text-white">Direct Wire / Pro-Forma Invoice</h4>
+            <p className="text-xs text-stone-500 dark:text-stone-400 max-w-sm mx-auto font-normal">
+              A simulated transaction invoice will be generated upon confirmation with zero financial risk.
             </p>
           </div>
         )}
@@ -476,13 +476,13 @@ export function CheckoutForm() {
           variant="primary"
           size="lg"
           isLoading={isProcessing}
-          className="w-full text-base font-bold py-4 glow-cyan"
+          className="w-full text-base font-bold py-4 shadow-lg"
         >
-          Confirm & Place Order • {formatPrice(total)}
+          Confirm & Simulate Order • {formatPrice(total)}
         </Button>
 
-        <p className="text-[11px] text-center text-slate-500 mt-3">
-          This is a simulated e-commerce portfolio demonstration. No real financial credentials are required or processed.
+        <p className="text-[11px] text-center text-stone-500 dark:text-stone-400 mt-3 font-normal">
+          Portfolio Demonstration Notice: This is an architectural frontend demonstration. No real charges will be made.
         </p>
       </div>
     </form>
